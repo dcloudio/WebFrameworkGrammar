@@ -1,0 +1,1987 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<javascript>
+	<aliases>
+		<alias name="$" type="jQuery"/>
+	</aliases>
+	<class type="offset" >
+		<properties>
+			<property type="undefined" name="top" ></property>
+			<property type="undefined" name="left" ></property>
+		</properties>
+	</class>
+	<class type="keyvalue" >
+		<properties>
+			<property type="undefined" name="name" ></property>
+			<property type="undefined" name="value" ></property>
+		</properties>
+	</class>
+	<class type="jQuery" superclass="Object">
+		<constructors>
+			<constructor>
+				<parameters>
+					<parameter name="selector" type="Selector|SelectorString" usage="required">
+						<description>A string containing a selector expression</description>
+					</parameter>
+					<parameter name="context" type="Element|jQuery" usage="optional">
+						<description>A DOM Element, Document, or jQuery to use as context</description>
+					</parameter>
+					<parameter name="element" type="Element" usage="required">
+						<description>A DOM element to wrap in a jQuery object.</description>
+					</parameter>
+					<parameter name="elementArray" type="Array" usage="required">
+						<description>An array containing a set of DOM elements to wrap in a jQuery object.</description>
+					</parameter>
+					<parameter name="jQuery object" type="Object" usage="required">
+						<description>An existing jQuery object to clone.</description>
+					</parameter>
+				</parameters>
+				<return-types>
+					<return-type type="jQuery"/>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<description>Accepts a string containing a CSS selector which is then used to match a set of elements.</description>
+			</constructor>
+			<constructor>
+				<parameters>
+					<parameter name="callback" type="Function" usage="required">
+						<description>The function to execute when the DOM is ready.</description>
+					</parameter>
+				</parameters>
+				<return-types>
+					<return-type type="jQuery"/>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<description>Binds a function to be executed when the DOM has finished loading.</description>
+			</constructor>
+		</constructors>
+		<methods>
+			<method name="ajax" scope="static">
+				<return-types>
+					<return-type type="jQuery.jqXHR"/>
+				</return-types>
+				<parameters>
+					<parameter name="url" type="String|URIString" usage=""/>
+					<parameter name="settings" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="ajaxPrefilter" scope="static">
+				<return-types>
+					<return-type type="None"/>
+				</return-types>
+				<parameters>
+					<parameter name="dataTypes" type="String" usage="optional"/>
+					<parameter name="handler" type="Function(Object,Object,XMLHttpRequest)" usage=""/>
+				</parameters>
+			</method>
+			<method name="ajaxSetup" scope="static">
+				<return-types>
+					<return-type type="None"/>
+				</return-types>
+				<parameters>
+					<parameter name="options" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="ajaxTransport" scope="static">
+				<return-types>
+					<return-type type="None"/>
+				</return-types>
+				<parameters>
+					<parameter name="dataType" type="String" usage=""/>
+					<parameter name="handler" type="Function(Object,Object,XMLHttpRequest)" usage=""/>
+				</parameters>
+			</method>
+			<method name="Callbacks" scope="static">
+				<return-types>
+					<return-type type="jQuery.Callbacks"/>
+				</return-types>
+				<parameters>
+					<parameter name="flags" type="String" usage=""/>
+				</parameters>
+			</method>
+			<method name="contains" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="container" type="Element" usage=""/>
+					<parameter name="contained" type="Element" usage=""/>
+				</parameters>
+			</method>
+			<method name="data" scope="static">
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="element" type="Element" usage=""/>
+					<parameter name="key" type="String" usage=""/>
+					<parameter name="value" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="Event" scope="static">
+				<return-types>
+					<return-type type="jQuery.Event"/>
+				</return-types>
+				<parameters>
+					<parameter name="type" type="Object" usage=""/>
+					<parameter name="props" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="Deferred" scope="static">
+				<return-types>
+					<return-type type="jQuery.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="beforeStart" type="Function(jQuery.Deferred)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="dequeue" scope="static">
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="queue" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="each" scope="static">
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="collection" type="Object" usage=""/>
+					<parameter name="callback" type="Function(Number,Object)" usage=""/>
+				</parameters>
+			</method>
+			<method name="error" scope="static">
+				<return-types>
+					<return-type type="None"/>
+				</return-types>
+			</method>
+			<method name="extend" scope="static">
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="Object" usage=""/>
+					<parameter name="source" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="fx" scope="static">
+				<return-types>
+					<return-type type="jQuery.fx"/>
+				</return-types>
+				<parameters>
+					<parameter name="elem" type="Element" usage=""/>
+					<parameter name="options" type="Object" usage=""/>
+					<parameter name="prop" type="String" usage=""/>
+					<parameter name="end" type="Number" usage="optional"/>
+					<parameter name="easing" type="Boolean" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="get" scope="static">
+				<return-types>
+					<return-type type="jQuery.jqXHR"/>
+				</return-types>
+				<parameters>
+					<parameter name="url" type="String" usage=""/>
+					<parameter name="data" type="Object" usage="optional"/>
+					<parameter name="success" type="Function(String,String,XMLHttpRequest)" usage=""/>
+					<parameter name="dataType" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="getJSON" scope="static">
+				<return-types>
+					<return-type type="jQuery.jqXHR"/>
+				</return-types>
+				<parameters>
+					<parameter name="url" type="String|URIString" usage=""/>
+					<parameter name="data" type="Object" usage="optional"/>
+					<parameter name="success" type="Function(Object,String,XMLHttpRequest)" usage=""/>
+				</parameters>
+			</method>
+			<method name="getScript" scope="static">
+				<return-types>
+					<return-type type="jQuery.jqXHR"/>
+				</return-types>
+				<parameters>
+					<parameter name="url" type="String|URIString" usage=""/>
+					<parameter name="success" type="Function(String,String,XMLHttpRequest)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="globalEval" scope="static">
+				<return-types>
+					<return-type type="None"/>
+				</return-types>
+				<parameters>
+					<parameter name="code" type="String" usage=""/>
+				</parameters>
+			</method>
+			<method name="grep" scope="static">
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="array" type="Array" usage=""/>
+					<parameter name="filter" type="Function(Object,Number)" usage=""/>
+					<parameter name="invert" type="Boolean" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="hasData" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="element" type="Element" usage=""/>
+				</parameters>
+			</method>
+			<method name="holdReady" scope="static">
+				<return-types>
+					<return-type type="None"/>
+				</return-types>
+				<parameters>
+					<parameter name="hold" type="Boolean" usage=""/>
+				</parameters>
+			</method>
+			<method name="inArray" scope="static">
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+				<parameters>
+					<parameter name="value" type="Object" usage=""/>
+					<parameter name="array" type="Array" usage=""/>
+					<parameter name="from" type="Number" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="isArray" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="isEmptyObject" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="isFunction" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="isNumeric" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="isPlainObject" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="isWindow" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="isXMLDoc" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="makeArray" scope="static">
+				<return-types>
+					<return-type type="Array"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="map" scope="static">
+				<return-types>
+					<return-type type="Array"/>
+				</return-types>
+				<parameters>
+					<parameter name="array" type="Array" usage=""/>
+					<parameter name="callback" type="Function(Object,Number)" usage=""/>
+				</parameters>
+			</method>
+			<method name="merge" scope="static">
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="first" type="Array" usage=""/>
+					<parameter name="second" type="Array" usage=""/>
+				</parameters>
+			</method>
+			<method name="noConflict" scope="static">
+				<return-types>
+					<return-type type="jQuery"/>
+				</return-types>
+				<parameters>
+					<parameter name="removeAll" type="Boolean" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="noop" scope="static">
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+			</method>
+			<method name="now" scope="static">
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+			</method>
+			<method name="param" scope="static">
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="parseHTML" scope="static">
+				<return-types>
+					<return-type type="Array"/>
+				</return-types>
+				<parameters>
+					<parameter name="data" type="String" usage=""/>
+					<parameter name="context" type="Element" usage="optional"/>
+					<parameter name="keepScripts" type="Boolean" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="parseJSON" scope="static">
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="json" type="String" usage=""/>
+				</parameters>
+			</method>
+			<method name="parseXML" scope="static">
+				<return-types>
+					<return-type type="XMLDocument"/>
+				</return-types>
+				<parameters>
+					<parameter name="xml" type="String" usage=""/>
+				</parameters>
+			</method>
+			<method name="post" scope="static">
+				<return-types>
+					<return-type type="jQuery.jqXHR"/>
+				</return-types>
+				<parameters>
+					<parameter name="url" type="String|URIString" usage=""/>
+					<parameter name="data" type="Object" usage="optional"/>
+					<parameter name="success" type="Function(String,String,XMLHttpRequest)" usage=""/>
+					<parameter name="dataType" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="proxy" scope="static">
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+				<parameters>
+					<parameter name="function" type="Function" usage=""/>
+					<parameter name="context" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="queue" scope="static">
+				<return-types>
+					<return-type type="Array"/>
+				</return-types>
+				<parameters>
+					<parameter name="element" type="Element" usage=""/>
+					<parameter name="queue" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="removeData" scope="static">
+				<return-types>
+					<return-type type="None"/>
+				</return-types>
+				<parameters>
+					<parameter name="element" type="Element" usage=""/>
+					<parameter name="name" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="sub" scope="static">
+				<return-types>
+					<return-type type="jQuery"/>
+				</return-types>
+			</method>
+			<method name="trim" scope="static">
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="str" type="String" usage=""/>
+				</parameters>
+			</method>
+			<method name="type" scope="static">
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="unique" scope="static">
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="array" type="Array" usage=""/>
+				</parameters>
+			</method>
+			<method name="when" scope="static">
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+				<parameters>
+					<parameter name="deferred" type="jQuery.Deferred" usage=""/>
+				</parameters>
+			</method>
+		</methods>
+		<properties>
+			<property type="jQuery.fn" name="fn" scope="static"></property>
+			<property type="Object" name="cssHooks" scope="static">
+				<description>Hook directly into jQuery to override how particular CSS properties are retrieved or set, normalize CSS property naming, or create custom properties.</description>
+			</property>
+			<property type="jQuery.Promise" name="Promise" scope="static">
+				<description>A constructor function that returns a chainable utility object with methods to register multiple callbacks into callback queues, invoke callback queues, and relay the success or failure state of any synchronous or asynchronous function.</description>
+			</property>
+			<property type="jQuery.jqXHR" name="jqXHR" scope="static"></property>
+			<property type="jQuery.support" name="support" scope="static">
+				<description>A collection of properties that represent the presence of different browser features or bugs. Primarily intended for jQuery's internal use; specific properties may be removed when they are no longer needed internally to improve page startup performance.</description>
+			</property>
+		</properties>
+	</class>
+	<class type="jQuery.fn" superclass="Object">
+		<methods>
+			<method name="add" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage=""/>
+				</parameters>
+			</method>
+			<method name="addBack" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="addClass" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="className" type="String|ClassString" usage=""/>
+				</parameters>
+			</method>
+			<method name="after" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="content" type="HTMLString|Element|Array|jQuery.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="ajaxComplete" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event,XMLHttpRequest)" usage=""/>
+				</parameters>
+			</method>
+			<method name="ajaxError" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event,XMLHttpRequest)" usage=""/>
+				</parameters>
+			</method>
+			<method name="ajaxSend" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event,XMLHttpRequest)" usage=""/>
+				</parameters>
+			</method>
+			<method name="ajaxStart" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="ajaxStop" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="ajaxSuccess" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event,XMLHttpRequest)" usage=""/>
+				</parameters>
+			</method>
+			<method name="andSelf" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+			</method>
+			<method name="animate" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="properties" type="Object" usage=""/>
+					<parameter name="duration" type="Number" usage="optional"/>
+					<parameter name="easing" type="String" usage="optional"/>
+					<parameter name="complete" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="append" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="content" type="HTMLString|Element|Array|jQuery.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="appendTo" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="HTMLString|Element|Array|jQuery.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="attr" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="name" type="AttrString|String" usage=""/>
+					<parameter name="value" type="AttrValueString|String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="before" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="content" type="HTMLString|Element|Array|jQuery.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="bind" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="eventType" type="EventString|String" usage=""/>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="blur" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="change" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="children" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="click" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="clone" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="dataAndEvents" type="Boolean" usage="optional"/>
+					<parameter name="deep" type="Boolean" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="closest" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage=""/>
+				</parameters>
+			</method>
+			<method name="contents" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+			</method>
+			<method name="context" >
+				<return-types>
+					<return-type type="Element"/>
+				</return-types>
+			</method>
+			<method name="css" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="name" type="String" usage=""/>
+					<parameter name="value" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="data" >
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="key" type="String" usage=""/>
+					<parameter name="value" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="dblclick" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="delay" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="duration" type="Number" usage=""/>
+					<parameter name="queue" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="delegate" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage=""/>
+					<parameter name="eventType" type="String" usage=""/>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="dequeue" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="queue" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="detach" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="die" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+			</method>
+			<method name="each" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function(Number,Element)" usage=""/>
+				</parameters>
+			</method>
+			<method name="empty" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+			</method>
+			<method name="end" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+			</method>
+			<method name="eq" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="i" type="Number" usage=""/>
+				</parameters>
+			</method>
+			<method name="error" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="fadeIn" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="duration" type="Number" usage="optional"/>
+					<parameter name="complete" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="fadeOut" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="duration" type="Number" usage="optional"/>
+					<parameter name="complete" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="fadeTo" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="duration" type="Number" usage=""/>
+					<parameter name="opacity" type="Number" usage=""/>
+					<parameter name="complete" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="fadeToggle" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="duration" type="Number" usage="optional"/>
+					<parameter name="easing" type="String" usage="optional"/>
+					<parameter name="complete" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="filter" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage=""/>
+				</parameters>
+			</method>
+			<method name="find" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage=""/>
+				</parameters>
+			</method>
+			<method name="finish" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="queue" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="first" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+			</method>
+			<method name="focusin" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="focusout" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="get" >
+				<return-types>
+					<return-type type="Element"/>
+				</return-types>
+				<parameters>
+					<parameter name="i" type="Number" usage=""/>
+				</parameters>
+			</method>
+			<method name="has" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage=""/>
+				</parameters>
+			</method>
+			<method name="hasClass" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="className" type="ClassString|String" usage=""/>
+				</parameters>
+			</method>
+			<method name="height" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+			</method>
+			<method name="hide" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+			</method>
+			<method name="hover" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="fnOver" type="Function(jQuery.Event)" usage=""/>
+					<parameter name="fnOut" type="Function(jQuery.Event)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="html" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+			</method>
+			<method name="index" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="innerHeight" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+			</method>
+			<method name="innerWidth" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+			</method>
+			<method name="insertAfter" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="insertBefore" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="is" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="SelectorString|Function|Element|Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="keydown" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="keypress" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="keyup" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="last" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+			</method>
+			<method name="live" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage=""/>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="load" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="map" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function(Number,Element)" usage=""/>
+				</parameters>
+			</method>
+			<method name="mousedown" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="mouseenter" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="mouseleave" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="mousemove" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="mouseout" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="mouseover" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="mouseup" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="next" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="nextAll" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="nextUntil" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString|Element" usage="optional"/>
+					<parameter name="filter" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="not" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage=""/>
+				</parameters>
+			</method>
+			<method name="off" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="events" type="EventString|String" usage=""/>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="offset" >
+				<return-types>
+					<return-type type="Offset"/>
+				</return-types>
+			</method>
+			<method name="offsetParent" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+			</method>
+			<method name="on" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="events" type="EventString|String" usage=""/>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+					<parameter name="data" type="Object" usage="optional"/>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="one" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="events" type="EventString|String" usage=""/>
+					<parameter name="data" type="Object" usage="optional"/>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="outerHeight" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+				<parameters>
+					<parameter name="includeMargin" type="Boolean" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="outerWidth" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+				<parameters>
+					<parameter name="includeMargin" type="Boolean" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="parent" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="parents" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="parentsUntil" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString|Element" usage="optional"/>
+					<parameter name="filter" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="position" >
+				<return-types>
+					<return-type type="Offset"/>
+				</return-types>
+			</method>
+			<method name="prepend" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="content" type="HTMLString|Element|Array|jQuery.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="prependTo" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="HTMLString|Element|Array|jQuery.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="prev" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="prevAll" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="prevUntil" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString|Element" usage="optional"/>
+					<parameter name="filter" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="promise" >
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+				<parameters>
+					<parameter name="type" type="String" usage="optional"/>
+					<parameter name="target" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="prop" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="name" type="String" usage=""/>
+					<parameter name="value" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="pushStack" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="elements" type="Array" usage=""/>
+				</parameters>
+			</method>
+			<method name="queue" >
+				<return-types>
+					<return-type type="Array"/>
+				</return-types>
+				<parameters>
+					<parameter name="queue" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="ready" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="fn" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="remove" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="removeAttr" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="attrName" type="String|AttrString" usage=""/>
+				</parameters>
+			</method>
+			<method name="removeClass" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="className" type="ClassString|String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="removeData" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="name" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="removeProp" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="propName" type="String" usage=""/>
+				</parameters>
+			</method>
+			<method name="replaceAll" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="replaceWith" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="newContent" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="resize" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="scroll" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="select" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="serialize" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+			</method>
+			<method name="serializeArray" >
+				<return-types>
+					<return-type type="Array"/>
+				</return-types>
+			</method>
+			<method name="show" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+			</method>
+			<method name="siblings" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="size" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+			</method>
+			<method name="slice" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="start" type="Number" usage=""/>
+					<parameter name="end" type="Number" usage=""/>
+				</parameters>
+			</method>
+			<method name="slideDown" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="duration" type="Number" usage="optional"/>
+					<parameter name="complete" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="slideToggle" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="duration" type="Number" usage="optional"/>
+					<parameter name="complete" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="slideUp" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="duration" type="Number" usage="optional"/>
+					<parameter name="complete" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="stop" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="clearQueue" type="Boolean" usage="optional"/>
+					<parameter name="jumpToEnd" type="Boolean" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="submit" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="text" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+			</method>
+			<method name="toArray" >
+				<return-types>
+					<return-type type="Array"/>
+				</return-types>
+			</method>
+			<method name="toggle" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="duration" type="Number" usage="optional"/>
+					<parameter name="complete" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="toggleClass" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="className" type="ClassString|String" usage=""/>
+				</parameters>
+			</method>
+			<method name="trigger" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="eventType" type="EventString|String" usage=""/>
+					<parameter name="params" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="triggerHandler" >
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="eventType" type="EventString|String" usage=""/>
+					<parameter name="params" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="unbind" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="eventType" type="EventString|String" usage="optional"/>
+					<parameter name="handler" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="undelegate" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+			</method>
+			<method name="unload" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(jQuery.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="unwrap" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+			</method>
+			<method name="val" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+			</method>
+			<method name="width" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+			</method>
+			<method name="wrap" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="wrappingElement" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="wrapAll" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="wrappingElement" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="wrapInner" >
+				<return-types>
+					<return-type type="jQuery.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="wrappingElement" type="Object" usage=""/>
+				</parameters>
+			</method>
+		</methods>
+		<properties>
+			<property type="String" name="jquery" >
+				<description>A string containing the jQuery version number.</description>
+			</property>
+			<property type="Number" name="length" >
+				<description>The number of elements in the jQuery object.</description>
+			</property>
+			<property type="Number" name="scrollLeft" >
+				<description>Get the current horizontal position of the scroll bar for the first element in the set of matched elements or set the horizontal position of the scroll bar for every matched element.</description>
+			</property>
+			<property type="Number" name="scrollTop" >
+				<description>Get the current vertical position of the scroll bar for the first element in the set of matched elements or set the vertical position of the scroll bar for every matched element.</description>
+			</property>
+			<property type="String" name="selector" >
+				<description>A selector representing selector passed to jQuery(), if any, when creating the original set.</description>
+			</property>
+			<property type="Array.prototype.push" name="push" >
+				<description>Mutates an array by appending the given elements and returning the new length of the array.</description>
+			</property>
+			<property type="Array.prototype.sort" name="sort" >
+				<description>Sorts the elements of an array in place and returns the array.</description>
+			</property>
+			<property type="Array.prototype.splice" name="splice" >
+				<description>Changes the content of an array, adding new elements while removing old elements.</description>
+			</property>
+		</properties>
+	</class>
+	<class type="jQuery.Callbacks" superclass="Object">
+		<methods>
+			<method name="add" >
+				<return-types>
+					<return-type type="jQuery.Callbacks"/>
+				</return-types>
+				<parameters>
+					<parameter name="callbacks" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="disable" >
+				<return-types>
+					<return-type type="jQuery.Callbacks"/>
+				</return-types>
+			</method>
+			<method name="disabled" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="empty" >
+				<return-types>
+					<return-type type="jQuery.Callbacks"/>
+				</return-types>
+			</method>
+			<method name="fire" >
+				<return-types>
+					<return-type type="jQuery.Callbacks"/>
+				</return-types>
+				<parameters>
+					<parameter name="arguments" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="fired" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="fireWith" >
+				<return-types>
+					<return-type type="jQuery.Callbacks"/>
+				</return-types>
+				<parameters>
+					<parameter name="context" type="Object" usage="optional"/>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="has" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="lock" >
+				<return-types>
+					<return-type type="jQuery.Callbacks"/>
+				</return-types>
+			</method>
+			<method name="locked" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="remove" >
+				<return-types>
+					<return-type type="jQuery.Callbacks"/>
+				</return-types>
+				<parameters>
+					<parameter name="callbacks" type="Object" usage=""/>
+				</parameters>
+			</method>
+		</methods>
+	</class>
+	<class type="jQuery.Event" superclass="Object">
+		<methods>
+			<method name="isDefaultPrevented" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="isImmediatePropagationStopped" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="isPropagationStopped" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="preventDefault" >
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+			</method>
+			<method name="stopImmediatePropagation" >
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+			</method>
+			<method name="stopPropagation" >
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+			</method>
+		</methods>
+		<properties>
+			<property type="Element" name="currentTarget" >
+				<description>The current DOM element within the event bubbling phase.</description>
+			</property>
+			<property type="Object" name="data" >
+				<description>An optional object of data passed to an event method when the current executing handler is bound.</description>
+			</property>
+			<property type="Element" name="delegateTarget" >
+				<description>The element where the currently-called jQuery event handler was attached.</description>
+			</property>
+			<property type="Boolean" name="metaKey" >
+				<description>Indicates whether the META key was pressed when the event fired.</description>
+			</property>
+			<property type="String" name="namespace" >
+				<description>The namespace specified when the event was triggered.</description>
+			</property>
+			<property type="Number" name="pageX" >
+				<description>The mouse position relative to the left edge of the document.</description>
+			</property>
+			<property type="Number" name="pageY" >
+				<description>The mouse position relative to the top edge of the document.</description>
+			</property>
+			<property type="Element" name="relatedTarget" >
+				<description>The other DOM element involved in the event, if any.</description>
+			</property>
+			<property type="Object" name="result" >
+				<description>The last value returned by an event handler that was triggered by this event, unless the value was undefined.</description>
+			</property>
+			<property type="Element" name="target" >
+				<description>The DOM element that initiated the event.</description>
+			</property>
+			<property type="Number" name="timeStamp" >
+				<description>The difference in milliseconds between the time the browser created the event and January 1, 1970.</description>
+			</property>
+			<property type="String" name="type" >
+				<description>Describes the nature of the event.</description>
+			</property>
+			<property type="Number" name="which" >
+				<description>For key or mouse events, this property indicates the specific key or button that was pressed.</description>
+			</property>
+		</properties>
+	</class>
+	<class type="jQuery.Deferred" superclass="Object">
+		<methods>
+			<method name="always" >
+				<return-types>
+					<return-type type="jQuery.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="done" >
+				<return-types>
+					<return-type type="jQuery.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="fail" >
+				<return-types>
+					<return-type type="jQuery.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="isRejected" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="isResolved" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="notify" >
+				<return-types>
+					<return-type type="jQuery.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="notifyWith" >
+				<return-types>
+					<return-type type="jQuery.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="context" type="Object" usage="optional"/>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="pipe" >
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+				<parameters>
+					<parameter name="doneFilter" type="Function" usage="optional"/>
+					<parameter name="failFilter" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="progress" >
+				<return-types>
+					<return-type type="jQuery.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="promise" >
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="reject" >
+				<return-types>
+					<return-type type="jQuery.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="rejectWith" >
+				<return-types>
+					<return-type type="jQuery.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="context" type="Object" usage="optional"/>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="resolve" >
+				<return-types>
+					<return-type type="jQuery.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="resolveWith" >
+				<return-types>
+					<return-type type="jQuery.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="context" type="Object" usage="optional"/>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="state" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+			</method>
+			<method name="then" >
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+				<parameters>
+					<parameter name="doneFilter" type="Function" usage=""/>
+					<parameter name="failFilter" type="Function" usage="optional"/>
+					<parameter name="progressFilter" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+		</methods>
+	</class>
+	<class type="jQuery.Promise" superclass="Object">
+		<methods>
+			<method name="always" >
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+			</method>
+			<method name="done" >
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+			</method>
+			<method name="fail" >
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+			</method>
+			<method name="isRejected" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="isResolved" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="pipe" >
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+			</method>
+			<method name="promise" >
+				<return-types>
+					<return-type type="jQuery.Deferred"/>
+				</return-types>
+			</method>
+			<method name="state" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+			</method>
+			<method name="then" >
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+			</method>
+		</methods>
+	</class>
+	<class type="jQuery.jqXHR" superclass="Object">
+		<methods>
+			<method name="always" >
+				<return-types>
+					<return-type type="jQuery.jqXHR"/>
+				</return-types>
+			</method>
+			<method name="done" >
+				<return-types>
+					<return-type type="jQuery.jqXHR"/>
+				</return-types>
+			</method>
+			<method name="fail" >
+				<return-types>
+					<return-type type="jQuery.jqXHR"/>
+				</return-types>
+			</method>
+			<method name="isRejected" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="isResolved" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="pipe" >
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+			</method>
+			<method name="promise" >
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+			</method>
+			<method name="state" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+			</method>
+			<method name="then" >
+				<return-types>
+					<return-type type="jQuery.Promise"/>
+				</return-types>
+			</method>
+			<method name="setRequestHeader" >
+				<return-types>
+					<return-type type="None"/>
+				</return-types>
+			</method>
+			<method name="getAllResponseHeader" ></method>
+			<method name="getResponseHeader" ></method>
+			<method name="statusCode" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+			</method>
+			<method name="abort" >
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+			</method>
+		</methods>
+		<properties>
+			<property type="Number" name="readyState" ></property>
+			<property type="Number" name="status" ></property>
+			<property type="String" name="statusText" ></property>
+			<property type="String" name="resoponseText" ></property>
+			<property type="String" name="resoponseXML" ></property>
+		</properties>
+	</class>
+	<class type="jQuery.fx" superclass="Object">
+		<methods>
+			<method name="stop" >
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+			</method>
+			<method name="tick" >
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+			</method>
+			<method name="start" >
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+			</method>
+		</methods>
+		<properties>
+			<property type="Number" name="interval" >
+				<description>The rate (in milliseconds) at which animations fire.</description>
+			</property>
+			<property type="Boolean" name="off" >
+				<description>Globally disable all animations.</description>
+			</property>
+			<property type="jQuery.speeds" name="speeds" ></property>
+		</properties>
+	</class>
+</javascript>
