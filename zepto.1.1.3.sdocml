@@ -1,0 +1,1481 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<javascript>
+	<aliases>
+		<alias name="$" type="Zepto"/>
+		<alias type="Class&lt;Zepto&gt;" name="Zepto"/>
+	</aliases>
+	<class type="Offset" >
+		<properties>
+			<property type="String" name="top" ></property>
+			<property type="String" name="left" ></property>
+			<property type="String" name="width" ></property>
+			<property type="String" name="height" ></property>
+		</properties>
+	</class>
+	<class type="ajaxSettings" >
+		<properties>
+			<property type="Number" name="timeout" ></property>
+			<property type="Boolean" name="global" ></property>
+			<property type="String" name="accepts" ></property>
+		</properties>
+		<methods>
+			<method name="xhr">
+				<return-types>
+					<return-type type="XMLHttpRequest"/>
+				</return-types>
+			</method>
+		</methods>
+	</class>
+	<class type="AjaxOptions" >
+		<properties>
+			<property type="String" name="type"></property>
+			<property type="String|URIString" name="url" ></property>
+			<property type="Object" name="data" ></property>
+			<property type="Boolean" name="processData" ></property>
+			<property type="String" name="contentType" ></property>
+			<property type="String" name="mimeType" ></property>
+			<property type="String" name="dataType" ></property>
+			<property type="String" name="jsonp" ></property>
+			<property type="String|Function" name="jsonpCallback" ></property>
+			<property type="Number" name="timeout" ></property>
+			<property type="Object" name="headers" ></property>
+			<property type="Boolean" name="async" ></property>
+			<property type="Boolean" name="global" ></property>
+			<property type="Object" name="context" ></property>
+			<property type="Boolean" name="traditional" ></property>
+			<property type="Boolean" name="cache" ></property>
+			<property type="Object" name="xhrFields" ></property>
+			<property type="String" name="username" ></property>
+			<property type="String" name="password" ></property>
+		</properties>
+		<methods>
+			<method name="beforeSend">
+				<parameters>
+					<parameter name="xhr" type="XMLHttpRequest" usage="">
+					</parameter>
+					<parameter name="settings" type="AjaxOptions" usage="">
+					</parameter>
+				</parameters>
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="success">
+				<parameters>
+					<parameter name="data" type="Object" usage="">
+					</parameter>
+					<parameter name="status" type="String" usage="">
+					</parameter>
+					<parameter name="xhr" type="XMLHttpRequest" usage="">
+					</parameter>
+				</parameters>
+			</method>
+			<method name="error">
+				<parameters>
+					<parameter name="xhr" type="XMLHttpRequest" usage="">
+					</parameter>
+					<parameter name="errorType" type="String" usage="">
+					</parameter>
+					<parameter name="error" type="Number" usage="">
+					</parameter>
+				</parameters>
+			</method>
+			<method name="complete">
+				<parameters>
+					<parameter name="xhr" type="XMLHttpRequest" usage="">
+					</parameter>
+					<parameter name="status" type="String" usage="">
+					</parameter>
+				</parameters>
+			</method>
+		</methods>
+	</class>
+	<class type="Zepto" superclass="Object">
+		<constructors>
+			<constructor>
+				<parameters>
+					<parameter name="selector" type="Selector|SelectorString" usage="required">
+						<description>A string containing a selector expression</description>
+					</parameter>
+					<parameter name="context" type="Element|Zepto" usage="optional">
+						<description>A DOM Element, Document, or Zepto to use as context</description>
+					</parameter>
+				</parameters>
+				<return-types>
+					<return-type type="Zepto"/>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<description>Accepts a string containing a CSS selector which is then used to match a set of elements.</description>
+			</constructor>
+			<constructor>
+				<parameters>
+					<parameter name="html" type="HTMLString" usage="required">
+					</parameter>
+					<parameter name="attributes" type="Object" usage="optional">
+					</parameter>
+				</parameters>
+				<return-types>
+					<return-type type="Zepto"/>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+			</constructor>
+			<constructor>
+				<parameters>
+					<parameter name="node" type="HTMLElement" usage="required">
+					</parameter>
+				</parameters>
+				<return-types>
+					<return-type type="Zepto"/>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+			</constructor>
+			<constructor>
+				<parameters>
+					<parameter name="callback" type="Function(Zepto)" usage="required">
+						<description>The function to execute when the DOM is ready.</description>
+					</parameter>
+				</parameters>
+				<return-types>
+					<return-type type="Zepto"/>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<description>Binds a function to be executed when the DOM has finished loading.</description>
+			</constructor>
+		</constructors>
+		<methods>
+			<method name="camelCase" scope="static">
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="string" type="String" usage=""/>
+				</parameters>
+				<description>Turn a dasherized string into “camel case”. Doesn’t affect already camel-cased strings.</description>
+			</method>
+			<method name="contains" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="container" type="Element" usage=""/>
+					<parameter name="contained" type="Element" usage=""/>
+				</parameters>
+				<description>Check if the parent node contains the given DOM node. Returns false if both are the same node.</description>
+			</method>
+			<method name="each" scope="static">
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="collection" type="Array|Object" usage=""/>
+					<parameter name="callback" type="Function(Number,Object)" usage=""/>
+				</parameters>
+				<description>Iterate over array elements or object key-value pairs. Returning false from the iterator function stops the iteration.</description>
+			</method>
+			<method name="extend" scope="static">
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="Object" usage=""/>
+					<parameter name="source" type="Object" usage=""/>
+				</parameters>
+				<description>Extend target object with properties from each of the source objects, overriding the properties on target.By default, copying is shallow. An optional true for the first argument triggers deep (recursive) copying.</description>
+			</method>
+			<method name="grep" scope="static">
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="array" type="Array" usage=""/>
+					<parameter name="filter" type="Function(Object)" usage=""/>
+				</parameters>
+				<description>Get a new array containing only the items for which the callback function returned true.</description>
+			</method>
+			<method name="inArray" scope="static">
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+				<parameters>
+					<parameter name="value" type="Object" usage=""/>
+					<parameter name="array" type="Array" usage=""/>
+					<parameter name="from" type="Number" usage="optional"/>
+				</parameters>
+				<description>Get the position of element inside an array, or -1 if not found.</description>
+			</method>
+			<method name="isArray" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+				<description>True if the object is an array.</description>
+			</method>
+			<method name="isFunction" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+				<description>True if the object is a function.</description>
+			</method>
+			<method name="isPlainObject" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+				<description>True if the object is a “plain” JavaScript object, which is only true for object literals and objects created with new Object.</description>
+			</method>
+			<method name="isWindow" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+				<description>True if the object is a window object. This is useful for iframes where each one has its own window, and where these objects fail the regular obj === window check.</description>
+			</method>
+			<method name="map" scope="static">
+				<return-types>
+					<return-type type="Array"/>
+				</return-types>
+				<parameters>
+					<parameter name="array" type="Array" usage=""/>
+					<parameter name="callback" type="Function(Object,Number)" usage=""/>
+				</parameters>
+				<description>Iterate through elements of collection and return all results of running the iterator function, with null and undefined values filtered out.</description>
+			</method>
+			<method name="parseJSON" scope="static">
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="json" type="String" usage=""/>
+				</parameters>
+				<description>Alias for the native JSON.parse method.</description>
+			</method>
+			<method name="trim" scope="static">
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="str" type="String" usage=""/>
+				</parameters>
+				<description>Remove whitespace from beginning and end of a string; just like String.prototype.trim().</description>
+			</method>
+			<method name="type" scope="static">
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+				<description>Get string type of an object. Possible types are: null undefined boolean number string function array date regexp object error.</description>
+			</method>
+			<method name="Event" scope="static">
+				<return-types>
+					<return-type type="Zepto.Event"/>
+				</return-types>
+				<parameters>
+					<parameter name="type" type="String" usage=""/>
+					<parameter name="props" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="proxy" scope="static">
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+				<parameters>
+					<parameter name="function" type="Function" usage=""/>
+					<parameter name="context" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="ajax" scope="static">
+				<return-types>
+					<return-type type="Zepto.jqXHR"/>
+				</return-types>
+				<parameters>
+					<parameter name="option" type="AjaxOptions" usage=""/>
+				</parameters>
+			</method>
+			<method name="get" scope="static">
+				<return-types>
+					<return-type type="Zepto.jqXHR"/>
+				</return-types>
+				<parameters>
+					<parameter name="url" type="URIString|String" usage=""/>
+					<parameter name="data" type="Object" usage="optional"/>
+					<parameter name="success" type="Function(String,String,XMLHttpRequest)" usage=""/>
+					<parameter name="dataType" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="getJSON" scope="static">
+				<return-types>
+					<return-type type="Zepto.jqXHR"/>
+				</return-types>
+				<parameters>
+					<parameter name="url" type="String|URIString" usage=""/>
+					<parameter name="data" type="Object" usage="optional"/>
+					<parameter name="success" type="Function(Object,String,XMLHttpRequest)" usage=""/>
+				</parameters>
+			</method>
+			<method name="param" scope="static">
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="post" scope="static">
+				<return-types>
+					<return-type type="Zepto.jqXHR"/>
+				</return-types>
+				<parameters>
+					<parameter name="url" type="String|URIString" usage=""/>
+					<parameter name="data" type="Object" usage="optional"/>
+					<parameter name="success" type="Function(String,String,XMLHttpRequest)" usage=""/>
+					<parameter name="dataType" type="String" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="Callbacks" scope="static">
+				<return-types>
+					<return-type type="Zepto.Callbacks"/>
+				</return-types>
+				<parameters>
+					<parameter name="flags" type="String" usage=""/>
+				</parameters>
+			</method>
+			
+			<method name="data" scope="static">
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="element" type="Element" usage=""/>
+					<parameter name="key" type="String" usage=""/>
+					<parameter name="value" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="Deferred" scope="static">
+				<return-types>
+					<return-type type="Zepto.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="beforeStart" type="Function(Zepto.Deferred)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="fx" scope="static">
+				<return-types>
+					<return-type type="Zepto.fx"/>
+				</return-types>
+				<parameters>
+					<parameter name="elem" type="Element" usage=""/>
+					<parameter name="options" type="Object" usage=""/>
+					<parameter name="prop" type="String" usage=""/>
+					<parameter name="end" type="Number" usage="optional"/>
+					<parameter name="easing" type="Boolean" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="isEmptyObject" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
+		</methods>
+		<properties>
+			<property type="Zepto.os" name="os" scope="static"></property>
+			<property type="Zepto.browser" name="browser" scope="static"></property>
+			<property type="ajaxSettings" name="ajaxSettings" scope="static"></property>
+			<property type="Zepto.fn" name="fn" scope="static">
+					<description>Zepto.fn is an object that holds all of the methods that are available on Zepto collections, such as addClass(), attr(), and other. Adding a function to this object makes that method available on every Zepto collection.</description>
+			</property>
+			<property type="Zepto.Promise" name="Promise" scope="static">
+				<description>A constructor function that returns a chainable utility object with methods to register multiple callbacks into callback queues, invoke callback queues, and relay the success or failure state of any synchronous or asynchronous function.</description>
+			</property>
+			<property type="Zepto.jqXHR" name="jqXHR" scope="static"></property>
+		</properties>
+	</class>
+	<class type="Zepto.os">
+		<properties>
+			<property type="Boolean" name="phone" scope="instance"></property>
+			<property type="Boolean" name="tablet" scope="instance"></property>
+			<property type="Boolean" name="ios" scope="instance"></property>
+			<property type="Boolean" name="android" scope="instance"></property>
+			<property type="Boolean" name="webos" scope="instance"></property>
+			<property type="Boolean" name="blackberry" scope="instance"></property>
+			<property type="Boolean" name="bb10" scope="instance"></property>
+			<property type="Boolean" name="rimtabletos" scope="instance"></property>
+			<property type="Boolean" name="iphone" scope="instance"></property>
+			<property type="Boolean" name="ipad" scope="instance"></property>
+			<property type="Boolean" name="ipod " scope="instance"></property>
+			<property type="Boolean" name="touchpad" scope="instance"></property>
+			<property type="Boolean" name="kindle" scope="instance"></property>
+		</properties>
+	</class>
+	<class type="Zepto.browser">
+		<properties>
+			<property type="Boolean" name="chrome" scope="instance"></property>
+			<property type="Boolean" name="firefox" scope="instance"></property>
+			<property type="Boolean" name="safari" scope="instance"></property>
+			<property type="Boolean" name="webview" scope="instance"></property>
+			<property type="Boolean" name="silk" scope="instance"></property>
+			<property type="Boolean" name="playbook" scope="instance"></property>
+			<property type="Boolean" name="ie" scope="instance"></property>
+		</properties>
+	</class>
+	<class type="Zepto.fn" superclass="Object">
+		<methods>
+			<method name="add" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage=""/>
+				</parameters>
+				<description>Modify the current collection by adding the results of performing the CSS selector on the whole document, or, if context is given, just inside context elements.</description>
+			</method>
+			<method name="addClass" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="className" type="String|ClassString" usage=""/>
+				</parameters>
+			</method>
+			<method name="after" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="content" type="HTMLString|Element|Array|Zepto.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="append" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="content" type="HTMLString|Element|Array|Zepto.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="appendTo" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="SelectorString|Element|Array|Zepto.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="attr" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="name" type="AttrString|String" usage=""/>
+					<parameter name="value" type="AttrValueString|String|Function(Number, Object)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="before" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="content" type="HTMLString|Element|Array|Zepto.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="children" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="clone" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+			</method>
+			<method name="closest" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString|Element|Zepto.fn" usage=""/>
+					<parameter name="context" type="Zepto.fn" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="load" >
+				<return-types>
+					<return-type type="Zepto.jqXHR"/>
+				</return-types>
+				<parameters>
+					<parameter name="url" type="String|URIString" usage=""/>
+					<parameter name="success" type="Function(String,String,XMLHttpRequest)" usage=""/>
+				</parameters>
+			</method>
+			<method name="concat" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="nodes" type="Array" usage="one-or-more"/>
+				</parameters>
+			</method>
+			<method name="css" >
+				<return-types>
+					<return-type type="String"/>
+					<return-type type="Object"/>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="name" type="String|cssPropertyString" usage=""/>
+					<parameter name="value" type="String|cssPropertyValueString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="data" >
+				<return-types>
+					<return-type type="Object"/>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="key" type="String" usage=""/>
+					<parameter name="value" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="each" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function(Number,Element)" usage=""/>
+				</parameters>
+			</method>
+			<method name="empty" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+			</method>
+			<method name="eq" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="i" type="Number" usage=""/>
+				</parameters>
+			</method>
+			<method name="filter" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString|Function(Number)" usage=""/>
+				</parameters>
+			</method>
+			<method name="find" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString|Elment|Zepto.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="first" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+			</method>
+			<method name="forEach" >
+				<parameters>
+					<parameter name="function" type="Function(Zepto.fn,Number,Array)" usage=""/>
+				</parameters>
+			</method>
+			<method name="get" >
+				<return-types>
+					<return-type type="Element"/>
+				</return-types>
+				<parameters>
+					<parameter name="i" type="Number" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="has" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString|Element" usage=""/>
+				</parameters>
+			</method>
+			<method name="hasClass" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="className" type="ClassString|String" usage=""/>
+				</parameters>
+			</method>
+			<method name="height" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+				<parameters>
+					<parameter name="value" type="String|Function(Number,String)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="hide" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+			</method>
+			<method name="html" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="htmlString" type="String|HTMLString|Function(Number,String|HTMLString)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="index" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="indexOf" >
+				<parameters>
+					<parameter name="element" type="Element" usage=""/>
+					<parameter name="index" type="Number" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="insertAfter" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="SelectorString|Element" usage=""/>
+				</parameters>
+			</method>
+			<method name="insertBefore" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="SelectorString|Element" usage=""/>
+				</parameters>
+			</method>
+			<method name="is" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="SelectorString|Function|Element|Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="last" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+			</method>
+			<method name="map" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function(Number,Element)" usage=""/>
+				</parameters>
+			</method>
+			<method name="next" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="not" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage=""/>
+				</parameters>
+			</method>
+			<method name="offset" >
+				<return-types>
+					<return-type type="Offset"/>
+				</return-types>
+				<parameters>
+					<parameter name="coordinates" type="Offset|Function(Number,Offset)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="offsetParent" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+			</method>
+			<method name="parent" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="parents" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="pluck" >
+				<return-types>
+					<return-type type="Array"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|cssPropertyString" usage=""/>
+				</parameters>
+			</method>
+			<method name="position" >
+				<return-types>
+					<return-type type="Offset"/>
+				</return-types>
+			</method>
+			<method name="prepend" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="content" type="HTMLString|Element|Array|Zepto.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="prependTo" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="SelectorString|Element|Array|Zepto.fn" usage=""/>
+				</parameters>
+			</method>
+			<method name="prev" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="prop" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="name" type="String|AttrString" usage=""/>
+					<parameter name="value" type="String|AttrValueString|Function(Number, String|AttrValueString)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="ready" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="fn" type="Function(Zepto)" usage=""/>
+				</parameters>
+			</method>
+			<method name="remove" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+			</method>
+			<method name="removeAttr" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="attrName" type="String|AttrString" usage=""/>
+				</parameters>
+			</method>
+			<method name="removeClass" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="className" type="ClassString|String|Function(Number, ClassString|String)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="replaceWith" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="content" type="HTMLString|Element|Array" usage=""/>
+				</parameters>
+			</method>
+			<method name="scrollLeft" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+				<parameters>
+					<parameter name="value" type="Number|String" usage=""/>
+				</parameters>
+				<description>Gets or sets how many pixels were scrolled to the right so far on window or scrollable element on the page.</description>
+			</method>
+			<method name="scrollTop" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+				<parameters>
+					<parameter name="value" type="Number|String" usage=""/>
+				</parameters>
+				<description>Gets or sets how many pixels were scrolled down so far on window or scrollable element on the page.</description>
+			</method>
+			<method name="show" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+			</method>
+			<method name="siblings" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="size" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+			</method>
+			<method name="slice" >
+				<return-types>
+					<return-type type="Array"/>
+				</return-types>
+				<parameters>
+					<parameter name="start" type="Number" usage=""/>
+					<parameter name="end" type="Number" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="text" >
+				<return-types>
+					<return-type type="String"/>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="content" type="String|HTMLString" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="toggle" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="setting" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="toggleClass" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="className" type="ClassString|String|Function(Number,ClassString|String)" usage=""/>
+				</parameters>
+			</method>
+			<method name="unwrap" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+			</method>
+			<method name="val" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+					<return-type type="String"/>
+				</return-types>
+				<parameters>
+					<parameter name="value" type="String|Function(Number,String)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="width" >
+				<return-types>
+					<return-type type="Number"/>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="value" type="String|Function(Number,Number)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="wrap" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="wrappingElement" type="HTMLString|Element" usage=""/>
+				</parameters>
+			</method>
+			<method name="wrapAll" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="wrappingElement" type="HTMLString|Element" usage=""/>
+				</parameters>
+			</method>
+			<method name="wrapInner" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="wrappingElement" type="HTMLString|Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="bind" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="eventType" type="EventString|String" usage=""/>
+					<parameter name="handler" type="Function(Zepto.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="off" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="events" type="EventString|String" usage="optional"/>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+					<parameter name="handler" type="Function(Zepto.Event)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="on" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="events" type="EventString|String" usage=""/>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+					<parameter name="data" type="Object" usage="optional"/>
+					<parameter name="handler" type="Function(Zepto.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="tap" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(Zepto.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="singleTap" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(Zepto.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="doubleTap" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(Zepto.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="longTap" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(Zepto.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="swipe" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(Zepto.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="swipeLeft" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(Zepto.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="swipeRight" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(Zepto.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="swipeUp" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(Zepto.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="swipeDown" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(Zepto.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="one" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="events" type="EventString|String" usage=""/>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+					<parameter name="data" type="Object" usage="optional"/>
+					<parameter name="handler" type="Function(Zepto.Event)" usage=""/>
+				</parameters>
+			</method>
+			<method name="trigger" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="eventType" type="EventString|String" usage=""/>
+					<parameter name="params" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="triggerHandler" >
+				<return-types>
+					<return-type type="Object"/>
+				</return-types>
+				<parameters>
+					<parameter name="eventType" type="EventString|String" usage=""/>
+					<parameter name="params" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="unbind" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="eventType" type="EventString|String|Object" usage=""/>
+					<parameter name="handler" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="serialize" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+			</method>
+			<method name="serializeArray" >
+				<return-types>
+					<return-type type="Array"/>
+				</return-types>
+			</method>
+			<method name="submit" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="handler" type="Function(Zepto.Event)" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="animate" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="properties" type="Object" usage=""/>
+					<parameter name="duration" type="Number" usage="optional"/>
+					<parameter name="easing" type="String" usage="optional"/>
+					<parameter name="complete" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="contents" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+			</method>
+			<method name="detach" >
+				<return-types>
+					<return-type type="Zepto.fn"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+		</methods>
+		<properties>
+			<property type="String" name="Zepto" >
+				<description>A string containing the Zepto version number.</description>
+			</property>
+			<property type="Number" name="length" >
+				<description>The number of elements in the Zepto object.</description>
+			</property>
+			<property type="String" name="selector" >
+				<description>A selector representing selector passed to Zepto(), if any, when creating the original set.</description>
+			</property>
+			<property type="Array.prototype.push" name="push">
+				<description>Mutates an array by appending the given elements and returning the new length of the array.</description>
+			</property>
+			<property type="Array.prototype.reduce" name="reduce" >
+			</property>
+			<property type="Array.prototype.sort" name="sort">
+				<description>Sorts the elements of an array in place and returns the array.</description>
+			</property>
+			<property type="Array.prototype.splice" name="splice" >
+				<description>Changes the content of an array, adding new elements while removing old elements.</description>
+			</property>
+		</properties>
+	</class>
+	<class type="Zepto.Callbacks" superclass="Object">
+		<methods>
+			<method name="add" >
+				<return-types>
+					<return-type type="Zepto.Callbacks"/>
+				</return-types>
+				<parameters>
+					<parameter name="callbacks" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="disable" >
+				<return-types>
+					<return-type type="Zepto.Callbacks"/>
+				</return-types>
+			</method>
+			<method name="disabled" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="empty" >
+				<return-types>
+					<return-type type="Zepto.Callbacks"/>
+				</return-types>
+			</method>
+			<method name="fire" >
+				<return-types>
+					<return-type type="Zepto.Callbacks"/>
+				</return-types>
+				<parameters>
+					<parameter name="arguments" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="fired" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="fireWith" >
+				<return-types>
+					<return-type type="Zepto.Callbacks"/>
+				</return-types>
+				<parameters>
+					<parameter name="context" type="Object" usage="optional"/>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="has" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="lock" >
+				<return-types>
+					<return-type type="Zepto.Callbacks"/>
+				</return-types>
+			</method>
+			<method name="locked" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="remove" >
+				<return-types>
+					<return-type type="Zepto.Callbacks"/>
+				</return-types>
+				<parameters>
+					<parameter name="callbacks" type="Object" usage=""/>
+				</parameters>
+			</method>
+		</methods>
+	</class>
+	<class type="Zepto.Event" superclass="Event">
+		<methods>
+			<method name="isDefaultPrevented" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="isImmediatePropagationStopped" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="isPropagationStopped" >
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+			</method>
+			<method name="preventDefault" >
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+			</method>
+			<method name="stopImmediatePropagation" >
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+			</method>
+			<method name="stopPropagation" >
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+			</method>
+		</methods>
+		<properties>
+			<property type="Element" name="currentTarget" >
+				<description>The current DOM element within the event bubbling phase.</description>
+			</property>
+			<property type="Object" name="data" >
+				<description>An optional object of data passed to an event method when the current executing handler is bound.</description>
+			</property>
+			<property type="Element" name="delegateTarget" >
+				<description>The element where the currently-called Zepto event handler was attached.</description>
+			</property>
+			<property type="Boolean" name="metaKey" >
+				<description>Indicates whether the META key was pressed when the event fired.</description>
+			</property>
+			<property type="String" name="namespace" >
+				<description>The namespace specified when the event was triggered.</description>
+			</property>
+			<property type="Number" name="pageX" >
+				<description>The mouse position relative to the left edge of the document.</description>
+			</property>
+			<property type="Number" name="pageY" >
+				<description>The mouse position relative to the top edge of the document.</description>
+			</property>
+			<property type="Element" name="relatedTarget" >
+				<description>The other DOM element involved in the event, if any.</description>
+			</property>
+			<property type="Object" name="result" >
+				<description>The last value returned by an event handler that was triggered by this event, unless the value was undefined.</description>
+			</property>
+			<property type="Element" name="target" >
+				<description>The DOM element that initiated the event.</description>
+			</property>
+			<property type="Number" name="timeStamp" >
+				<description>The difference in milliseconds between the time the browser created the event and January 1, 1970.</description>
+			</property>
+			<property type="String" name="type" >
+				<description>Describes the nature of the event.</description>
+			</property>
+			<property type="Number" name="which" >
+				<description>For key or mouse events, this property indicates the specific key or button that was pressed.</description>
+			</property>
+		</properties>
+	</class>
+	<class type="Zepto.Deferred" superclass="Object">
+		<methods>
+			<method name="always" >
+				<return-types>
+					<return-type type="Zepto.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="done" >
+				<return-types>
+					<return-type type="Zepto.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="fail" >
+				<return-types>
+					<return-type type="Zepto.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="promise" >
+				<return-types>
+					<return-type type="Zepto.Promise"/>
+				</return-types>
+				<parameters>
+					<parameter name="target" type="Object" usage=""/>
+				</parameters>
+			</method>
+			<method name="reject" >
+				<return-types>
+					<return-type type="Zepto.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="rejectWith" >
+				<return-types>
+					<return-type type="Zepto.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="context" type="Object" usage="optional"/>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="resolve" >
+				<return-types>
+					<return-type type="Zepto.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="resolveWith" >
+				<return-types>
+					<return-type type="Zepto.Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="context" type="Object" usage="optional"/>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+			<method name="then" >
+				<return-types>
+					<return-type type="Zepto.Promise"/>
+				</return-types>
+				<parameters>
+					<parameter name="doneFilter" type="Function" usage=""/>
+					<parameter name="failFilter" type="Function" usage="optional"/>
+					<parameter name="progressFilter" type="Function" usage="optional"/>
+				</parameters>
+			</method>
+		</methods>
+	</class>
+	<class type="Zepto.Promise" superclass="Object">
+		<methods>
+			<method name="always" >
+				<return-types>
+					<return-type type="Zepto.Promise"/>
+				</return-types>
+				<parameters>
+					<parameter name="fn" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="done" >
+				<return-types>
+					<return-type type="Zepto.Promise"/>
+				</return-types>
+				<parameters>
+					<parameter name="fn" type="Function(Object, String, XMLHttpRequest)" usage=""/>
+				</parameters>
+			</method>
+			<method name="fail" >
+				<return-types>
+					<return-type type="Zepto.Promise"/>
+				</return-types>
+				<parameters>
+					<parameter name="fn" type="Function(XMLHttpRequest,String,Number)" usage=""/>
+				</parameters>
+			</method>
+			<method name="then" >
+				<return-types>
+					<return-type type="Zepto.Promise"/>
+				</return-types>
+				<parameters>
+					<parameter name="fn" type="Function" usage=""/>
+				</parameters>
+			</method>
+			<method name="promise" >
+				<return-types>
+					<return-type type="Zepto.Deferred"/>
+				</return-types>
+			</method>
+		</methods>
+	</class>
+	<class type="Zepto.jqXHR" superclass="XMLHttpRequest">
+		<methods>
+			<method name="always" >
+				<return-types>
+					<return-type type="Zepto.jqXHR"/>
+				</return-types>
+			</method>
+			<method name="done" >
+				<return-types>
+					<return-type type="Zepto.jqXHR"/>
+				</return-types>
+			</method>
+			<method name="fail" >
+				<return-types>
+					<return-type type="Zepto.jqXHR"/>
+				</return-types>
+			</method>
+			<method name="promise" >
+				<return-types>
+					<return-type type="Zepto.Promise"/>
+				</return-types>
+			</method>
+			<method name="then" >
+				<return-types>
+					<return-type type="Zepto.Promise"/>
+				</return-types>
+			</method>
+			<method name="setRequestHeader" >
+				<return-types>
+					<return-type type="None"/>
+				</return-types>
+			</method>
+			<method name="getResponseHeader" ></method>
+			<method name="abort" >
+				<return-types>
+					<return-type type="Function"/>
+				</return-types>
+			</method>
+		</methods>
+		<properties>
+			<property type="Number" name="readyState" ></property>
+			<property type="Number" name="status" ></property>
+			<property type="String" name="statusText" ></property>
+			<property type="String" name="resoponseText" ></property>
+			<property type="String" name="resoponseXML" ></property>
+		</properties>
+	</class>
+	<class type="Zepto.fx" superclass="Object">
+		<properties>
+			<property type="Boolean" name="off" >
+				<description>Globally disable all animations.</description>
+			</property>
+			<property type="Zepto.speeds" name="speeds" ></property>
+		</properties>
+	</class>
+	<class type="Zepto.speeds" >
+		<properties>
+			<property type="Number" name="_default" ></property>
+			<property type="Number" name="fast" ></property>
+			<property type="Number" name="slow" ></property>
+		</properties>
+	</class>
+</javascript>

@@ -2,7 +2,53 @@
 <javascript>
   <aliases>
     <alias name="$" type="jQuery"/>
+    <alias type="Class&lt;jQuery&gt;" name="jQuery"/>
   </aliases>
+  <class type="jQuery.Browser">
+  	   <properties>
+  	   	<property name="version" scope="instance" type="Number"></property>
+  	    <property name="webkit" scope="instance" type="Boolean"></property>
+  	    <property name="safari" scope="instance" type="Boolean"></property>
+  	    <property name="opera" scope="instance" type="Boolean"></property>
+  	    <property name="msie" scope="instance" type="Boolean"></property>
+  	    <property name="mozilla" scope="instance" type="Boolean"></property>
+  	  </properties>
+  </class>
+  <class type="jQuerySetting" >
+		<properties>
+			<property type="String" name="accepts" ></property>
+			<property type="Boolean" name="async" ></property>
+			<property type="Function(jQuery.jqXHR,jQuerySetting)" name="beforeSend" ></property>
+			<property type="Boolean" name="cache" ></property>
+			<property type="Function(jQuery.jqXHR,String)" name="complete" ></property>
+			<property type="Object" name="contents" ></property>
+			<property type="String" name="contentType" ></property>
+			<property type="Object|Element" name="context" ></property>
+			<property type="Obejct" name="converters" ></property>
+			<property type="Obejct|String" name="data" ></property>
+			<property type="Function(String,String)" name="dataFilter" ></property>
+			<property type="Function(jQuery.jqXHR,String,String)" name="error" ></property>
+			<property type="Boolean" name="global" ></property>
+			<property type="Obejct" name="headers" ></property>
+			<property type="Boolean" name="ifModified" ></property>
+			<property type="Boolean" name="isLocal" ></property>
+			<property type="String" name="jsonp" ></property>
+			<property type="String|Function" name="jsonpCallback" ></property>
+			<property type="String" name="mimeType" ></property>
+			<property type="String" name="password" ></property>
+			<property type="Boolean" name="processData" ></property>
+			<property type="String" name="scriptCharset" ></property>
+			<property type="Object" name="xhrFields" ></property>
+			<property type="Object" name="statusCode" ></property>
+			<property type="Function(Object,String,jQuery.jqXHR)" name="success" ></property>
+			<property type="Number" name="timeout" ></property>
+			<property type="Boolean" name="traditional" ></property>
+			<property type="String" name="type" ></property>
+			<property type="String|URIString" name="url" ></property>
+			<property type="String" name="username" ></property>
+			<property type="Function" name="xhr" ></property>
+		</properties>
+	</class>
   <class type="Promise" superclass="Object">
     <constructors>
       <constructor>
@@ -14,71 +60,12 @@
       </constructor>
     </constructors>
     <methods>
-      <method name="pipe" scope="instance">
-        <parameters>
-          <parameter name="doneFilter" type="Function" usage="optional">
-            <description>
-        An optional function that is called when the Deferred is resolved.
-      </description>
-          </parameter>
-          <parameter name="failFilter" type="Function" usage="optional">
-            <description>
-        An optional function that is called when the Deferred is rejected.
-      </description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="Promise"/>
-        </return-types>
-        <description> Utility method to filter and/or chain Deferreds.  </description>
-        <examples>
-          <example>
-			&lt;p&gt;Filter resolve value:&lt;/p&gt;
-		
-		&lt;p&gt;
-var defer = $.Deferred(),
-    filtered = defer.pipe(function( value ) {
-      return value * 2;
-    });
-
-defer.resolve( 5 );
-filtered.done(function( value ) {
-  alert( "Value is ( 2*5 = ) 10: " + value );
-});
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Filter reject value:&lt;/p&gt;
-		
-		&lt;p&gt;
-var defer = $.Deferred(),
-    filtered = defer.pipe( null, function( value ) {
-      return value * 3;
-    });
-
-defer.reject( 6 );
-filtered.fail(function( value ) {
-  alert( "Value is ( 3*6 = ) 18: " + value );
-});
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Chain tasks:&lt;/p&gt;
-		
-		&lt;p&gt;
-var request = $.ajax( url, { dataType: "json" } ),
-    chained = request.pipe(function( data ) {
-      return $.ajax( url2, { data: { user: data.userId } } );
-    });
-
-chained.done(function( data ) {
-  // data retrieved from url2 as provided by the first request
-});
-
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
+	<method name="state" >
+				<return-types>
+					<return-type type="String"/>
+				</return-types>
+				<description> Determine the current state of a Deferred object.</description>
+			</method>
       <method name="always" scope="instance">
         <parameters>
           <parameter name="alwaysCallbacks" type="Function" usage="required">
@@ -103,71 +90,7 @@ $.get("test.php").always( function() {
 	</example>
         </examples>
       </method>
-      <method name="promise" scope="instance">
-        <parameters>
-          <parameter name="target" type="Object" usage="optional">
-            <description>Object onto which the promise methods have to be attached</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="Promise"/>
-        </return-types>
-        <description> Return a Deferred's Promise object. </description>
-        <examples>
-          <example>
-			&lt;p&gt;Create a Deferred and set two timer-based functions to either resolve or reject the Deferred after a random interval. Whichever one fires first "wins" and will call one of the callbacks. The second timeout has no effect since the Deferred is already complete (in a resolved or rejected state) from the first timeout action.&lt;/p&gt;
-		
-		&lt;p&gt;// Create a Deferred and return its Promise
-function asyncEvent(){
-    var dfd = new jQuery.Deferred();
-    setTimeout(function(){
-        dfd.resolve("hurray");
-    }, Math.floor(Math.random()*1500));
-    setTimeout(function(){
-        dfd.reject("sorry");
-    }, Math.floor(Math.random()*1500));
-    return dfd.promise();
-}
-
-// Attach a done and fail handler for the asyncEvent
-$.when( asyncEvent() ).then(
-    function(status){
-        alert( status+', things are going well' );
-    },
-    function(status){
-        alert( status+', you fail this time' );
-    }
-);
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Use the target argument to promote an existing object to a Promise:&lt;/p&gt;
-		
-		&lt;p&gt;
-// Existing object
-var obj = {
-  hello: function( name ) {
-    alert( "Hello " + name );
-  }
-},
-// Create a Deferred
-defer = $.Deferred();
-
-// Set object as a promise
-defer.promise( obj );
-
-// Resolve the deferred
-defer.resolve( "John" );
-
-// Use the object as a Promise
-obj.done(function( name ) {
-  obj.hello( name ); // will alert "Hello John"
-}).hello( "Karl" ); // will alert "Hello Karl"
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
-      <method name="fail" scope="instance">
+     <method name="fail" scope="instance">
         <parameters>
           <parameter name="failCallbacks" type="Function" usage="required">
             <description>
@@ -287,18 +210,6 @@ $.get("test.php").then(
 &lt;/p&gt;
 	</example>
         </examples>
-      </method>
-      <method name="isRejected" scope="instance">
-        <return-types>
-          <return-type type="Boolean"/>
-        </return-types>
-        <description> Determine whether a Deferred object has been rejected. </description>
-      </method>
-      <method name="isResolved" scope="instance">
-        <return-types>
-          <return-type type="Boolean"/>
-        </return-types>
-        <description> Determine whether a Deferred object has been resolved. </description>
       </method>
     </methods>
   </class>
@@ -638,19 +549,7 @@ $.get("test.php").then(
         </return-types>
         <description> Reject a Deferred object and call any failCallbacks with the given </description>
       </method>
-      <method name="isRejected" scope="instance">
-        <return-types>
-          <return-type type="Boolean"/>
-        </return-types>
-        <description> Determine whether a Deferred object has been rejected. </description>
-      </method>
-      <method name="isResolved" scope="instance">
-        <return-types>
-          <return-type type="Boolean"/>
-        </return-types>
-        <description> Determine whether a Deferred object has been resolved. </description>
-      </method>
-      <method name="resolve" scope="instance">
+     <method name="resolve" scope="instance">
         <parameters>
           <parameter name="args" type="Object" usage="required">
             <description>
@@ -663,6 +562,31 @@ $.get("test.php").then(
         </return-types>
         <description> Resolve a Deferred object and call any doneCallbacks with the given </description>
       </method>
+      <method name="progress" >
+				<return-types>
+					<return-type type="Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="callback" type="Function" usage=""/>
+				</parameters>
+			</method>
+    <method name="notifyWith" >
+				<return-types>
+					<return-type type="Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="context" type="Object" usage="optional"/>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
+    <method name="notify" >
+				<return-types>
+					<return-type type="Deferred"/>
+				</return-types>
+				<parameters>
+					<parameter name="args" type="Object" usage="optional"/>
+				</parameters>
+			</method>
     </methods>
   </class>
   <class type="jqXHR" superclass="Promise" visibility="basic">
@@ -760,6 +684,11 @@ $.get("test.php").then(
         <example/>
         <remarks>Although currently recognized by most browsers, the XMLHttpRequest object will be part of the HTML DOM Level 3 specification.</remarks>
       </method>
+   	  <method name="statusCode" >
+				<return-types>
+					<return-type type="Number"/>
+				</return-types>
+			</method>
     </methods>
     <example/>
     <remarks>Although currently recognized by most browsers, the XMLHttpRequest object will be part of the HTML DOM Level 3 specification.</remarks>
@@ -771,7 +700,7 @@ $.get("test.php").then(
           <parameter name="selector" type="Selector|SelectorString" usage="required">
             <description>A string containing a selector expression</description>
           </parameter>
-          <parameter name="context" type="Element| jQuery" usage="optional">
+          <parameter name="context" type="Element|jQuery" usage="optional">
             <description>A DOM Element, Document, or jQuery to use as context</description>
           </parameter>
           <parameter name="element" type="Element" usage="required">
@@ -820,13 +749,13 @@ $.get("test.php").then(
       </constructor>
       <constructor>
         <parameters>
-          <parameter name="html" type="String" usage="required">
+          <parameter name="html" type="String|HTMLString" usage="required">
             <description>A string of HTML to create on the fly. Note that this parses HTML, </description>
           </parameter>
           <parameter name="ownerDocument" type="Document" usage="optional">
             <description>A document in which the new elements will be created</description>
           </parameter>
-          <parameter name="html" type="String" usage="required">
+          <parameter name="html" type="String|HTMLString" usage="required">
             <description>A string defining a single, standalone, HTML element (e.g. &lt;div/&gt; or &lt;div&gt;&lt;/div&gt;).</description>
           </parameter>
           <parameter name="props" type="Object" usage="required">
@@ -954,7 +883,7 @@ $("input").click(function(){
 	</example>
         </examples>
       </property>
-      <property name="browser" scope="static" type="Map">
+      <property name="browser" scope="static" type="jQuery.Browser">
         <description>Contains flags for the useragent, read from navigator.userAgent. </description>
         <examples>
           <example>
@@ -1005,38 +934,7 @@ $("input").click(function(){
 	</example>
         </examples>
       </property>
-      <property name="browser.version" scope="static" type="String">
-        <description>The version number of the rendering engine for the user's browser.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Returns the version number of the rendering engine used by the user's current browser. For example, FireFox 4 returns 2.0 (the version of the Gecko rendering engine it utilizes).&lt;/p&gt;
-		
-		&lt;p&gt;
-$("p").html( "The version number of the rendering engine your browser uses is: &lt;span&gt;" +
-                $.browser.version + "&lt;/span&gt;" );
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Alerts the version of IE's rendering engine that is being used:&lt;/p&gt;
-		
-		&lt;p&gt;
-if ( $.browser.msie ) {
-  alert( $.browser.version );
-}
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Often you only care about the "major number," the whole number, which you can get by using JavaScript's built-in parseInt() function:&lt;/p&gt;
-		
-		&lt;p&gt;
-if ( $.browser.msie ) {
-  alert( parseInt($.browser.version, 10) );
-}
-&lt;/p&gt;
-	</example>
-        </examples>
-      </property>
-      <property name="length" scope="instance" type="Number">
+     <property name="length" scope="instance" type="Number">
         <description>The number of elements in the jQuery object.</description>
         <examples>
           <example>
@@ -1048,39 +946,6 @@ if ( $.browser.msie ) {
       $("span").text("There are " + n + " divs." +
                      "Click to add more.");
     }).trigger('click'); // trigger the click to start&lt;/p&gt;
-	</example>
-        </examples>
-      </property>
-      <property name="context" scope="instance" type="Element">
-        <description>The DOM node context originally passed to </description>
-        <examples>
-          <example>
-			&lt;p&gt;Determine the exact context used.&lt;/p&gt;
-		
-		&lt;p&gt;$("ul")
-  .append("&lt;li&gt;" + $("ul").context + "&lt;/li&gt;")
-  .append("&lt;li&gt;" + $("ul", document.body).context.nodeName + "&lt;/li&gt;");
-
-&lt;/p&gt;
-	</example>
-        </examples>
-      </property>
-      <property name="boxModel" scope="static" type="Boolean">
-        <description>. States if the current page, in the user's browser, is being rendered using the </description>
-        <examples>
-          <example>
-			&lt;p&gt;Returns the box model for the iframe.&lt;/p&gt;
-		
-		&lt;p&gt;
-
-    $("p").html("The box model for this iframe is: &lt;span&gt;" +
-                jQuery.boxModel + "&lt;/span&gt;");
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Returns false if the page is in Quirks Mode in Internet Explorer&lt;/p&gt;
-		
-		&lt;p&gt;$.boxModel&lt;/p&gt;
 	</example>
         </examples>
       </property>
@@ -1106,7 +971,15 @@ if ( $.browser.msie ) {
       </property>
     </properties>
     <methods>
-      <method name="Deferred" visibility="basic">
+    	<method name="addBack" >
+				<return-types>
+					<return-type type="jQuery"/>
+				</return-types>
+				<parameters>
+					<parameter name="selector" type="String|SelectorString" usage="optional"/>
+				</parameters>
+			</method>
+      <method name="Deferred" visibility="static">
         <parameters>
           <parameter name="function" type="Function" usage="optional">
             <description>An optional function which is called just before the constructor returns and is passed the constructed deferred object as both the this object and as the first argument to the function.</description>
@@ -1117,7 +990,7 @@ if ( $.browser.msie ) {
         </return-types>
         <description>A chainable utility object that can register multiple callbacks into callback queues, invoke callback queues, and relay the success or failure state of any synchronous or asynchronous function.</description>
       </method>
-      <method name="promise" scope="instance">
+      <method name="promise" scope="basic">
         <parameters>
           <parameter name="type" type="String" usage="optional">
             <description> The type of queue that needs to be observed. </description>
@@ -1182,7 +1055,7 @@ $("button").bind( "click", function() {
       </method>
       <method name="removeProp" scope="instance">
         <parameters>
-          <parameter name="propertyName" type="String" usage="required">
+          <parameter name="propertyName" type="String|AttrString" usage="required">
             <description>The name of the property to set.</description>
           </parameter>
         </parameters>
@@ -1207,8 +1080,11 @@ $para.append("Now the secret luggage code is: ", String($para.prop("luggageCode"
       </method>
       <method name="prop" scope="instance">
         <parameters>
-          <parameter name="propertyName" type="String" usage="required">
+          <parameter name="propertyName" type="String|AttrString" usage="required">
             <description>The name of the property to get.</description>
+          </parameter>
+          <parameter name="value" type="AttrValueString|String|Object" usage="optional">
+            <description>A value to set for the property.</description>
           </parameter>
         </parameters>
         <return-types>
@@ -1230,51 +1106,17 @@ $("input").change(function() {
 	</example>
         </examples>
       </method>
-      <method name="prop" scope="instance">
-        <parameters>
-          <parameter name="propertyName" type="String" usage="required">
-            <description>The name of the property to set.</description>
-          </parameter>
-          <parameter name="value" type="String| Number| Boolean" usage="required">
-            <description>A value to set for the property.</description>
-          </parameter>
-          <parameter name="map" type="Map" usage="required">
-            <description>A map of property-value pairs to set.</description>
-          </parameter>
-          <parameter name="propertyName" type="String" usage="required">
-            <description>The name of the property to set.</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function returning the value to set. Receives the index position of the element in the set and the old property value as arguments. Within the function, the keyword </description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Set one or more properties for the set of matched elements.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Disable all checkboxes on the page.&lt;/p&gt;
-		
-		&lt;p&gt;
-$("input[type='checkbox']").prop({
-  disabled: true
-});
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
       <method name="ajaxPrefilter" scope="static">
         <parameters>
           <parameter name="dataTypes" type="String" usage="optional">
             <description>An optional string containing one or more space-separated dataTypes</description>
           </parameter>
-          <parameter name="handler" type="Function" usage="required">
+          <parameter name="handler" type="Function(Object,Object,XMLHttpRequest)" usage="required">
             <description>A handler to set default values for future Ajax requests.</description>
           </parameter>
         </parameters>
         <return-types>
-          <return-type type="undefined"/>
+          <return-type type="None"/>
         </return-types>
         <description>Handle custom Ajax options or modify existing options before each request is sent and before they are processed by </description>
       </method>
@@ -1399,95 +1241,6 @@ $( "#anotherElement" ).append( $title.text() );
 	</example>
         </examples>
       </method>
-      <method name="sub" scope="static">
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Creates a new copy of jQuery whose properties and methods can be modified without affecting the original jQuery object.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Adding a method to a jQuery sub so that it isn't exposed externally:&lt;/p&gt;
-		
-		&lt;p&gt;  (function(){
-    var sub$ = jQuery.sub();
-
-    sub$.fn.myCustomMethod = function(){
-      return 'just for me';
-    };
-
-    sub$(document).ready(function() {
-      sub$('body').myCustomMethod() // 'just for me'
-    });
-  })();
-  
-  typeof jQuery('body').myCustomMethod // undefined&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Override some jQuery methods to provide new functionality.&lt;/p&gt;
-		
-		&lt;p&gt;
-(function() {
-  var myjQuery = jQuery.sub();
-
-  myjQuery.fn.remove = function() {
-    // New functionality: Trigger a remove event
-    this.trigger("remove");
-
-    // Be sure to call the original jQuery remove method
-    return jQuery.fn.remove.apply( this, arguments );
-  };
-
-  myjQuery(function($) {
-    $(".menu").click(function() {
-      $(this).find(".submenu").remove();
-    });
-
-    // A new remove event is now triggered from this copy of jQuery
-    $(document).bind("remove", function(e) {
-      $(e.target).parent().hide();
-    });
-  });
-})();
-
-// Regular jQuery doesn't trigger a remove event when removing an element
-// This functionality is only contained within the modified 'myjQuery'.&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Create a plugin that returns plugin-specific methods.&lt;/p&gt;
-		
-		&lt;p&gt;
-(function() {
-  // Create a new copy of jQuery using sub()
-  var plugin = jQuery.sub();
-
-  // Extend that copy with the new plugin methods
-  plugin.fn.extend({
-    open: function() {
-      return this.show();
-    },
-    close: function() {
-      return this.hide();
-    }
-  });
-
-  // Add our plugin to the original jQuery
-  jQuery.fn.myplugin = function() {
-    this.addClass("plugin");
-
-    // Make sure our plugin returns our special plugin version of jQuery
-    return plugin( this );
-  };
-})();
-
-$(document).ready(function() {
-  // Call the plugin, open method now exists
-  $('#main').myplugin().open();
-
-  // Note: Calling just $("#main").open() won't work as open doesn't exist!
-});&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
       <method name="fadeToggle" scope="instance">
         <parameters>
           <parameter name="duration" type="String|Number" usage="optional">
@@ -1557,80 +1310,16 @@ $("button:last").click(function () {
 	</example>
         </examples>
       </method>
-      <method name="toggle" scope="instance">
-        <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute every even time the element is clicked.</description>
-          </parameter>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute every odd time the element is clicked.</description>
-          </parameter>
-          <parameter name="handler" type="Function" usage="optional">
-            <description>Additional handlers to cycle through after clicks.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Bind two or more handlers to the matched elements, to be executed on alternate clicks.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Click to toggle highlight on the list item.&lt;/p&gt;
-		
-		&lt;p&gt;
-    $("li").toggle(
-      function () {
-        $(this).css({"list-style-type":"disc", "color":"blue"});
-      },
-      function () {
-        $(this).css({"list-style-type":"disc", "color":"red"});
-      },
-      function () {
-        $(this).css({"list-style-type":"", "color":""});
-      }
-    );
-
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;To toggle a style on table cells:&lt;/p&gt;
-		
-		&lt;p&gt;$("td").toggle(
-  function () {
-    $(this).addClass("selected");
-  },
-  function () {
-    $(this).removeClass("selected");
-  }
-);&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
       <method name="undelegate" scope="instance">
         <parameters>
-          <parameter name="selector" type="String" usage="required">
+          <parameter name="selector" type="String|SelectorString" usage="optional">
             <description>A selector which will be used to filter the event results.</description>
           </parameter>
-          <parameter name="eventType" type="String" usage="required">
+          <parameter name="eventType" type="String|EventString" usage="optional">
             <description>A string containing a JavaScript event type, such as "click" or "keydown"</description>
           </parameter>
-          <parameter name="selector" type="String" usage="required">
-            <description>A selector which will be used to filter the event results.</description>
-          </parameter>
-          <parameter name="eventType" type="String" usage="required">
-            <description>A string containing a JavaScript event type, such as "click" or "keydown"</description>
-          </parameter>
-          <parameter name="handler" type="Function" usage="required">
+          <parameter name="handler" type="Function" usage="optional">
             <description>A function to execute at the time the event is triggered.</description>
-          </parameter>
-          <parameter name="selector" type="String" usage="required">
-            <description>A selector which will be used to filter the event results.</description>
-          </parameter>
-          <parameter name="events" type="Map" usage="required">
-            <description>A map of one or more event types and previously bound functions to unbind from them.</description>
-          </parameter>
-          <parameter name="namespace" type="String" usage="required">
-            <description>A string containing a namespace to unbind all events from.</description>
           </parameter>
         </parameters>
         <return-types>
@@ -1699,32 +1388,14 @@ $("form").undelegate(".whatever");&lt;/p&gt;
       </method>
       <method name="delegate" scope="instance">
         <parameters>
-          <parameter name="selector" type="String" usage="required">
-            <description>A selector to filter the elements that trigger the event.</description>
+          <parameter name="selector" type="String|SelectorString" usage="optional">
+            <description>A selector which will be used to filter the event results.</description>
           </parameter>
-          <parameter name="eventType" type="String" usage="required">
-            <description>A string containing one or more space-separated JavaScript event types, such as "click" or "keydown," or custom event names.</description>
+          <parameter name="eventType" type="String|EventString" usage="optional">
+            <description>A string containing a JavaScript event type, such as "click" or "keydown"</description>
           </parameter>
-          <parameter name="handler" type="Function" usage="required">
+          <parameter name="handler" type="Function" usage="optional">
             <description>A function to execute at the time the event is triggered.</description>
-          </parameter>
-          <parameter name="selector" type="String" usage="required">
-            <description>A selector to filter the elements that trigger the event.</description>
-          </parameter>
-          <parameter name="eventType" type="String" usage="required">
-            <description>A string containing one or more space-separated JavaScript event types, such as "click" or "keydown," or custom event names.</description>
-          </parameter>
-          <parameter name="eventData" type="Object" usage="required">
-            <description>A map of data that will be passed to the event handler.</description>
-          </parameter>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute at the time the event is triggered.</description>
-          </parameter>
-          <parameter name="selector" type="String" usage="required">
-            <description>A selector to filter the elements that trigger the event.</description>
-          </parameter>
-          <parameter name="events" type="Map" usage="required">
-            <description>A map of one or more event types and functions to execute for them.</description>
           </parameter>
         </parameters>
         <return-types>
@@ -1776,21 +1447,6 @@ $("form").undelegate(".whatever");&lt;/p&gt;
     });
 
 &lt;/p&gt;
-	</example>
-        </examples>
-      </method>
-      <method name="error" scope="static">
-        <parameters>
-          <parameter name="message" type="String" usage="required">
-            <description>The message to send out.</description>
-          </parameter>
-        </parameters>
-        <description>Takes a string and throws an exception containing it.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Override jQuery.error for display in Firebug.&lt;/p&gt;
-		
-		&lt;p&gt;jQuery.error = console.error;&lt;/p&gt;
 	</example>
         </examples>
       </method>
@@ -1960,7 +1616,7 @@ $("p").focusout(function() {
       </method>
       <method name="has" scope="instance">
         <parameters>
-          <parameter name="selector" type="String" usage="required">
+          <parameter name="selector" type="String|SelectorString" usage="required">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
           <parameter name="contained" type="Element" usage="required">
@@ -2038,16 +1694,10 @@ jQuery.contains(document.body, document.documentElement); // false&lt;/p&gt;
       </method>
       <method name="parentsUntil" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="optional">
+          <parameter name="selector" type="String|SelectorString|Element" usage="optional">
             <description>A string containing a selector expression to indicate where to stop matching ancestor elements.</description>
           </parameter>
-          <parameter name="filter" type="Selector" usage="optional">
-            <description>A string containing a selector expression to match elements against.</description>
-          </parameter>
-          <parameter name="element" type="Element" usage="optional">
-            <description>A DOM node or jQuery object indicating where to stop matching ancestor elements.</description>
-          </parameter>
-          <parameter name="filter" type="Selector" usage="optional">
+          <parameter name="filter" type="String|SelectorString" usage="optional">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
         </parameters>
@@ -2072,16 +1722,10 @@ $("li.item-2").parentsUntil( $("ul.level-1"), ".yes" )
       </method>
       <method name="prevUntil" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="optional">
+          <parameter name="selector" type="String|SelectorString|Element|jQeury" usage="optional">
             <description>A string containing a selector expression to indicate where to stop matching preceding sibling elements.</description>
           </parameter>
-          <parameter name="filter" type="Selector" usage="optional">
-            <description>A string containing a selector expression to match elements against.</description>
-          </parameter>
-          <parameter name="element" type="Element" usage="optional">
-            <description>A DOM node or jQuery object indicating where to stop matching preceding sibling elements.</description>
-          </parameter>
-          <parameter name="filter" type="Selector" usage="optional">
+          <parameter name="filter" type="String|SelectorString" usage="optional">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
         </parameters>
@@ -2106,16 +1750,10 @@ $("#term-3").prevUntil(term1, "dd")
       </method>
       <method name="nextUntil" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="optional">
+          <parameter name="selector" type="String|SelectorString|Element|jQeury" usage="optional">
             <description>A string containing a selector expression to indicate where to stop matching following sibling elements.</description>
           </parameter>
-          <parameter name="filter" type="Selector" usage="optional">
-            <description>A string containing a selector expression to match elements against.</description>
-          </parameter>
-          <parameter name="element" type="Element" usage="optional">
-            <description>A DOM node or jQuery object indicating where to stop matching following sibling elements.</description>
-          </parameter>
-          <parameter name="filter" type="Selector" usage="optional">
+          <parameter name="filter" type="String|SelectorString" usage="optional">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
         </parameters>
@@ -2141,7 +1779,7 @@ $("#term-1").nextUntil(term3, "dd")
       </method>
       <method name="each" scope="instance">
         <parameters>
-          <parameter name="function" type="Function" usage="required">
+          <parameter name="function" type="Function(Number, Element)" usage="required">
             <description>A function to execute for each matched element.</description>
           </parameter>
         </parameters>
@@ -2195,11 +1833,16 @@ $("#term-1").nextUntil(term3, "dd")
 	</example>
         </examples>
       </method>
+     <method name="isNumeric" scope="static">
+				<return-types>
+					<return-type type="Boolean"/>
+				</return-types>
+				<parameters>
+					<parameter name="obj" type="Object" usage=""/>
+				</parameters>
+			</method>
       <method name="pushStack" scope="instance">
         <parameters>
-          <parameter name="elements" type="Array" usage="required">
-            <description>An array of elements to push onto the stack and make into a new jQuery object.</description>
-          </parameter>
           <parameter name="elements" type="Array" usage="required">
             <description>An array of elements to push onto the stack and make into a new jQuery object.</description>
           </parameter>
@@ -2225,7 +1868,20 @@ $("#term-1").nextUntil(term3, "dd")
 	</example>
         </examples>
       </method>
+      <method name="parseHTML" scope="static">
+				<return-types>
+					<return-type type="Array"/>
+				</return-types>
+				<parameters>
+					<parameter name="data" type="String" usage=""/>
+					<parameter name="context" type="Element" usage="optional"/>
+					<parameter name="keepScripts" type="Boolean" usage="optional"/>
+				</parameters>
+			</method>
       <method name="globalEval" scope="static">
+      	<return-types>
+					<return-type type="None"/>
+				</return-types>
         <parameters>
           <parameter name="code" type="String" usage="required">
             <description>The JavaScript code to execute.</description>
@@ -2293,7 +1949,7 @@ $("span:eq(3)").text("" + jQuery.data(div, "test2"));&lt;/p&gt;
         </examples>
       </method>
       <method name="data" scope="static">
-        <parameters>
+				<parameters>
           <parameter name="element" type="Element" usage="required">
             <description>The DOM element to associate with the data.</description>
           </parameter>
@@ -2318,56 +1974,7 @@ $("span:eq(3)").text("" + jQuery.data(div, "test2"));&lt;/p&gt;
     $("span:last").text(jQuery.data(div, "test").last);&lt;/p&gt;
 	</example>
         </examples>
-      </method>
-      <method name="data" scope="static">
-        <parameters>
-          <parameter name="element" type="Element" usage="required">
-            <description>The DOM element to query for the data.</description>
-          </parameter>
-          <parameter name="key" type="String" usage="required">
-            <description>Name of the data stored.</description>
-          </parameter>
-          <parameter name="element" type="Element" usage="required">
-            <description>The DOM element to query for the data.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="Object"/>
-        </return-types>
-        <description>Returns value at named data store for the element, as set by </description>
-        <examples>
-          <example>
-			&lt;p&gt;Get the data named "blah" stored at for an element.&lt;/p&gt;
-		
-		&lt;p&gt;
-$("button").click(function(e) {
-  var value, div = $("div")[0];
-
-  switch ($("button").index(this)) {
-    case 0 :
-      value = jQuery.data(div, "blah");
-      break;
-    case 1 :
-      jQuery.data(div, "blah", "hello");
-      value = "Stored!";
-      break;
-    case 2 :
-      jQuery.data(div, "blah", 86);
-      value = "Stored!";
-      break;
-    case 3 :
-      jQuery.removeData(div, "blah");
-      value = "Removed!";
-      break;
-  }
-
-  $("span").text("" + value);
-});
-
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
+			</method>
       <method name="dequeue" scope="static">
         <parameters>
           <parameter name="element" type="Element" usage="required">
@@ -2429,77 +2036,6 @@ $("button").click(function(e) {
       $("div").slideUp("normal", runIt);
     }
     runIt();&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
-      <method name="queue" scope="static">
-        <parameters>
-          <parameter name="element" type="Element" usage="required">
-            <description>A DOM element where the array of queued functions is attached.</description>
-          </parameter>
-          <parameter name="queueName" type="String" usage="required">
-            <description>A string containing the name of the queue. Defaults to </description>
-          </parameter>
-          <parameter name="newQueue" type="Array" usage="required">
-            <description>An array of functions to replace the current queue contents.</description>
-          </parameter>
-          <parameter name="element" type="Element" usage="required">
-            <description>A DOM element on which to add a queued function.</description>
-          </parameter>
-          <parameter name="queueName" type="String" usage="required">
-            <description>A string containing the name of the queue. Defaults to </description>
-          </parameter>
-          <parameter name="callback" type="Function" usage="required">
-            <description>The new function to add to the queue.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Manipulate the queue of functions to be executed on the matched element.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Queue a custom function.&lt;/p&gt;
-		
-		&lt;p&gt;
-   $(document.body).click(function () {
-      $("div").show("slow");
-      $("div").animate({left:'+=200'},2000);
-      jQuery.queue( $("div")[0], "fx", function () {
-        $(this).addClass("newcolor");
-        jQuery.dequeue( this );
-      });
-      $("div").animate({left:'-=200'},500);
-      jQuery.queue( $("div")[0], "fx", function () {
-        $(this).removeClass("newcolor");
-        jQuery.dequeue( this );
-      });
-      $("div").slideUp();
-    });&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Set a queue array to delete the queue.&lt;/p&gt;
-		
-		&lt;p&gt;
-   $("#start").click(function () {
-      $("div").show("slow");
-      $("div").animate({left:'+=200'},5000);
-      jQuery.queue( $("div")[0], "fx", function () {
-        $(this).addClass("newcolor");
-        jQuery.dequeue( this );
-      });
-      $("div").animate({left:'-=200'},1500);
-      jQuery.queue( $("div")[0], "fx", function () {
-        $(this).removeClass("newcolor");
-        jQuery.dequeue( this );
-      });
-      $("div").slideUp();
-    });
-    $("#stop").click(function () {
-      jQuery.queue( $("div")[0], "fx", [] );
-      $("div").stop();
-    });
-&lt;/p&gt;
 	</example>
         </examples>
       </method>
@@ -2640,11 +2176,8 @@ $('#other').click(function() {
       </method>
       <method name="index" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="required">
+          <parameter name="selector" type="String|SelectorString|Element" usage="optional">
             <description>A selector representing a jQuery collection in which to look for an element.</description>
-          </parameter>
-          <parameter name="element" type="Element| jQuery" usage="required">
-            <description>The DOM element or first element within the jQuery object to look for.</description>
           </parameter>
         </parameters>
         <return-types>
@@ -2751,49 +2284,6 @@ $("span:last").text($("div").data("test").last);
 	</example>
         </examples>
       </method>
-      <method name="data" scope="instance">
-        <parameters>
-          <parameter name="key" type="String" usage="required">
-            <description>Name of the data stored.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="Object"/>
-        </return-types>
-        <description>Returns value at named data store for the first element in the jQuery collection, as set by data(name, value).</description>
-        <examples>
-          <example>
-			&lt;p&gt;Get the data named "blah" stored at for an element.&lt;/p&gt;
-		
-		&lt;p&gt;
-$("button").click(function(e) {
-  var value;
-
-  switch ($("button").index(this)) {
-    case 0 :
-      value = $("div").data("blah");
-      break;
-    case 1 :
-      $("div").data("blah", "hello");
-      value = "Stored!";
-      break;
-    case 2 :
-      $("div").data("blah", 86);
-      value = "Stored!";
-      break;
-    case 3 :
-      $("div").removeData("blah");
-      value = "Removed!";
-      break;
-  }
-
-  $("span").text("" + value);
-});
-
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
       <method name="get" scope="instance">
         <parameters>
           <parameter name="index" type="Number" usage="optional">
@@ -2836,28 +2326,7 @@ $("button").click(function(e) {
 	</example>
         </examples>
       </method>
-      <method name="size" scope="instance">
-        <return-types>
-          <return-type type="Number"/>
-        </return-types>
-        <description>Return the number of elements in the jQuery object.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Count the divs. Click to add more.&lt;/p&gt;
-		
-		&lt;p&gt;
-$(document.body)
-.click(function() { 
-  $(this).append( $("&lt;div&gt;") );
-  var n = $("div").size();
-  $("span").text("There are " + n + " divs. Click to add more.");
-})
-// trigger the click to start
-.click(); 
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
+     
       <method name="noConflict" scope="static">
         <parameters>
           <parameter name="removeAll" type="Boolean" usage="optional">
@@ -3045,68 +2514,6 @@ showIt();
 	</example>
         </examples>
       </method>
-      <method name="queue" scope="instance">
-        <parameters>
-          <parameter name="queueName" type="String" usage="optional">
-            <description>A string containing the name of the queue. Defaults to </description>
-          </parameter>
-          <parameter name="newQueue" type="Array" usage="required">
-            <description>An array of functions to replace the current queue contents.</description>
-          </parameter>
-          <parameter name="queueName" type="String" usage="optional">
-            <description>A string containing the name of the queue. Defaults to </description>
-          </parameter>
-          <parameter name="callback" type="Function" usage="required">
-            <description>The new function to add to the queue, with a function to call that will dequeue the next item.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Manipulate the queue of functions to be executed on the matched elements.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Queue a custom function.&lt;/p&gt;
-		
-		&lt;p&gt;$(document.body).click(function () {
-      $("div").show("slow");
-      $("div").animate({left:'+=200'},2000);
-      $("div").queue(function () {
-        $(this).addClass("newcolor");
-        $(this).dequeue();
-      });
-      $("div").animate({left:'-=200'},500);
-      $("div").queue(function () {
-        $(this).removeClass("newcolor");
-        $(this).dequeue();
-      });
-      $("div").slideUp();
-    });&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Set a queue array to delete the queue.&lt;/p&gt;
-		
-		&lt;p&gt;$("#start").click(function () {
-      $("div").show("slow");
-      $("div").animate({left:'+=200'},5000);
-      $("div").queue(function () {
-        $(this).addClass("newcolor");
-        $(this).dequeue();
-      });
-      $("div").animate({left:'-=200'},1500);
-      $("div").queue(function () {
-        $(this).removeClass("newcolor");
-        $(this).dequeue();
-      });
-      $("div").slideUp();
-    });
-    $("#stop").click(function () {
-      $("div").queue("fx", []);
-      $("div").stop();
-    });&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
       <method name="keyup" scope="instance">
         <parameters>
           <parameter name="handler" type="Function" usage="required">
@@ -3231,9 +2638,6 @@ $("#other").click(function() {
       </method>
       <method name="select" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3264,9 +2668,6 @@ $("#other").click(function() {
       </method>
       <method name="change" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3304,9 +2705,6 @@ $("#other").click(function() {
       </method>
       <method name="blur" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3328,9 +2726,6 @@ $("#other").click(function() {
       </method>
       <method name="focus" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3370,9 +2765,6 @@ $("#other").click(function() {
       </method>
       <method name="mousemove" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3453,43 +2845,9 @@ $("li.fade").hover(function(){$(this).fadeOut(100);$(this).fadeIn(500);});
 	</example>
         </examples>
       </method>
-      <method name="hover" scope="instance">
-        <parameters>
-          <parameter name="handlerInOut" type="Function" usage="required">
-            <description>A function to execute when the mouse pointer enters or leaves the element.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Bind a single handler to the matched elements, to be executed when the mouse pointer enters or leaves the elements.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Slide the next sibling LI up or down on hover, and toggle a class.&lt;/p&gt;
-		
-		&lt;p&gt;
-$("li")
-.filter(":odd")
-.hide()
- .end()
-.filter(":even")
-.hover(
-  function () {
-    $(this).toggleClass("active")
-      .next().stop(true, true).slideToggle();
-  }
-);
-
-
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
+     
       <method name="mouseleave" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3529,9 +2887,6 @@ mouseout fires when the pointer moves out of child element as well, while mousel
       </method>
       <method name="mouseenter" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3571,9 +2926,6 @@ mouseover fires when the pointer moves into the child element as well, while mou
       </method>
       <method name="mouseout" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3613,9 +2965,6 @@ mouseout fires when the pointer moves out of the child element as well, while mo
       </method>
       <method name="mouseover" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3655,9 +3004,6 @@ mouseover fires when the pointer moves into the child element as well, while mou
       </method>
       <method name="dblclick" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3690,9 +3036,6 @@ mouseover fires when the pointer moves into the child element as well, while mou
       </method>
       <method name="click" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3728,9 +3071,6 @@ mouseover fires when the pointer moves into the child element as well, while mou
       </method>
       <method name="mouseup" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3759,9 +3099,6 @@ mouseover fires when the pointer moves into the child element as well, while mou
       </method>
       <method name="mousedown" scope="instance">
         <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
           <parameter name="eventData" type="Object" usage="optional">
             <description>A map of data that will be passed to the event handler.</description>
           </parameter>
@@ -3788,93 +3125,7 @@ mouseover fires when the pointer moves into the child element as well, while mou
 	</example>
         </examples>
       </method>
-      <method name="error" scope="instance">
-        <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute when the event is triggered.</description>
-          </parameter>
-          <parameter name="eventData" type="Object" usage="optional">
-            <description>A map of data that will be passed to the event handler.</description>
-          </parameter>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Bind an event handler to the "error" JavaScript event.</description>
-        <examples>
-          <example>
-			&lt;p&gt;To hide the "broken image" icons for IE users, you can try:&lt;/p&gt;
-		
-		&lt;p&gt;$("img")
-  .error(function(){
-    $(this).hide();
-  })
-  .attr("src", "missing.png");&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
-      <method name="unload" scope="instance">
-        <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute when the event is triggered.</description>
-          </parameter>
-          <parameter name="eventData" type="Object" usage="optional">
-            <description>A map of data that will be passed to the event handler.</description>
-          </parameter>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Bind an event handler to the "unload" JavaScript event.</description>
-        <examples>
-          <example>
-			&lt;p&gt;To display an alert when a page is unloaded:&lt;/p&gt;
-		
-		&lt;p&gt;$(window).unload( function () { alert("Bye now!"); } );&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
-      <method name="load" scope="instance">
-        <parameters>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute when the event is triggered.</description>
-          </parameter>
-          <parameter name="eventData" type="Object" usage="optional">
-            <description>A map of data that will be passed to the event handler.</description>
-          </parameter>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute each time the event is triggered.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Bind an event handler to the "load" JavaScript event.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Run a function when the page is fully loaded including graphics.&lt;/p&gt;
-		
-		&lt;p&gt;$(window).load(function () {
-  // run code
-});&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Add the class bigImg to all images with height greater then 100 upon each image load.&lt;/p&gt;
-		
-		&lt;p&gt;$('img.userIcon').load(function(){
-  if($(this).height() &gt; 100) {
-    $(this).addClass('bigImg');
-  }
-});&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
+     
       <method name="ready" scope="instance">
         <parameters>
           <parameter name="handler" type="Function" usage="required">
@@ -3895,155 +3146,11 @@ mouseover fires when the pointer moves into the child element as well, while mou
 	</example>
         </examples>
       </method>
-      <method name="die" scope="instance">
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Remove all event handlers previously attached using </description>
-      </method>
-      <method name="die" scope="instance">
-        <parameters>
-          <parameter name="eventType" type="String" usage="required">
-            <description>A string containing a JavaScript event type, such as </description>
-          </parameter>
-          <parameter name="handler" type="String" usage="optional">
-            <description>The function that is no longer to be executed.</description>
-          </parameter>
-          <parameter name="eventTypes" type="Map" usage="required">
-            <description>A map of one or more event types, such as </description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Remove an event handler previously attached using </description>
-        <examples>
-          <example>
-			&lt;p&gt;Can bind and unbind events to the colored button.&lt;/p&gt;
-		
-		&lt;p&gt;
-
-function aClick() {
-  $("div").show().fadeOut("slow");
-}
-$("#bind").click(function () {
-  $("#theone").live("click", aClick)
-              .text("Can Click!");
-});
-$("#unbind").click(function () {
-  $("#theone").die("click", aClick)
-              .text("Does nothing...");
-});
-
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;To unbind all live events from all paragraphs, write:&lt;/p&gt;
-		
-		&lt;p&gt;$("p").die()&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;To unbind all live click events from all paragraphs, write:&lt;/p&gt;
-		
-		&lt;p&gt;$("p").die( "click" )&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;To unbind just one previously bound handler, pass the function in as the second argument:&lt;/p&gt;
-		
-		&lt;p&gt;var foo = function () {
-// code to handle some kind of event
-};
-
-$("p").live("click", foo); // ... now foo will be called when paragraphs are clicked ...
-
-$("p").die("click", foo); // ... foo will no longer be called.&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
-      <method name="live" scope="instance">
-        <parameters>
-          <parameter name="eventType" type="String" usage="required">
-            <description>A string containing a JavaScript event type, such as "click" or "keydown." As of jQuery 1.4 the string can contain multiple, space-separated event types or custom event names, as well.</description>
-          </parameter>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute at the time the event is triggered.</description>
-          </parameter>
-          <parameter name="eventType" type="String" usage="required">
-            <description>A string containing a JavaScript event type, such as "click" or "keydown." As of jQuery 1.4 the string can contain multiple, space-separated event types or custom event names, as well.</description>
-          </parameter>
-          <parameter name="eventData" type="Object" usage="required">
-            <description>A map of data that will be passed to the event handler.</description>
-          </parameter>
-          <parameter name="handler" type="Function" usage="required">
-            <description>A function to execute at the time the event is triggered.</description>
-          </parameter>
-          <parameter name="events" type="Object" usage="required">
-            <description>A map of one or more JavaScript event types and functions to execute for them.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Attach a handler to the event for all elements which match the current selector, now and in the future.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Click a paragraph to add another. Note that .live() binds the click event to all paragraphs - even new ones.&lt;/p&gt;
-		
-		&lt;p&gt;
-$("p").live("click", function(){
-  $(this).after("&lt;p&gt;Another paragraph!&lt;/p&gt;");
-});
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Cancel a default action and prevent it from bubbling up by returning false.&lt;/p&gt;
-		
-		&lt;p&gt;$("a").live("click", function() { return false; })&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Cancel only the default action by using the preventDefault method.&lt;/p&gt;
-		
-		&lt;p&gt;$("a").live("click", function(event){
-  event.preventDefault();
-});&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Bind custom events with .live().&lt;/p&gt;
-		
-		&lt;p&gt;
-$("p").live("myCustomEvent", function(e, myName, myValue) {
-  $(this).text("Hi there!");
-  $("span").stop().css("opacity", 1)
-           .text("myName = " + myName)
-           .fadeIn(30).fadeOut(1000);
-});
-$("button").click(function () {
-  $("p").trigger("myCustomEvent");
-});
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Use a map to bind multiple live event handlers. Note that .live() binds the click, mouseover, and mouseout events to all paragraphs — even new ones.&lt;/p&gt;
-		
-		&lt;p&gt;
-$("p").live({
-  click: function() {
-    $(this).after("&lt;p&gt;Another paragraph!&lt;/p&gt;");
-  },
-  mouseover: function() {
-    $(this).addClass("over");
-  },
-  mouseout: function() {
-    $(this).removeClass("over");
-  }
-});
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
+      
+     
       <method name="triggerHandler" scope="instance">
         <parameters>
-          <parameter name="eventType" type="String" usage="required">
+          <parameter name="eventType" type="String|EventString" usage="required">
             <description>A string containing a JavaScript event type, such as </description>
           </parameter>
           <parameter name="extraParameters" type="Array" usage="required">
@@ -4076,7 +3183,7 @@ $("&lt;span&gt;Focused!&lt;/span&gt;").appendTo("body").fadeOut(1000);
       </method>
       <method name="trigger" scope="instance">
         <parameters>
-          <parameter name="eventType" type="String" usage="required">
+          <parameter name="eventType" type="String|EventString" usage="required">
             <description>A string containing a JavaScript event type, such as </description>
           </parameter>
           <parameter name="extraParameters" type="Object" usage="required">
@@ -4175,7 +3282,7 @@ pass:"bar"
       </method>
       <method name="one" scope="instance">
         <parameters>
-          <parameter name="eventType" type="String" usage="required">
+          <parameter name="eventType" type="String|EventString" usage="required">
             <description>A string containing one or more JavaScript event types, such as "click" or "submit," or custom event names.</description>
           </parameter>
           <parameter name="eventData" type="Object" usage="optional">
@@ -4265,7 +3372,7 @@ alert( $(this).text() );
       </method>
       <method name="ajaxSetup" scope="static">
         <parameters>
-          <parameter name="options" type="Options" usage="required">
+          <parameter name="options" type="Object" usage="required">
             <description>A set of key/value pairs that configure the default Ajax request. All options are optional. </description>
           </parameter>
         </parameters>
@@ -4386,20 +3493,11 @@ alert( $(this).text() );
       </method>
       <method name="unbind" scope="instance">
         <parameters>
-          <parameter name="eventType" type="String" usage="optional">
+          <parameter name="eventType" type="String|EventString" usage="optional">
             <description>A string containing a JavaScript event type, such as </description>
           </parameter>
-          <parameter name="handler" type="Function" usage="optional">
+          <parameter name="handler" type="Function|Boolean" usage="optional">
             <description>The function that is to be no longer executed.</description>
-          </parameter>
-          <parameter name="eventType" type="String" usage="required">
-            <description>A string containing a JavaScript event type, such as </description>
-          </parameter>
-          <parameter name="false" type="Boolean" usage="required">
-            <description>Unbinds the corresponding 'return false' function that was bound using </description>
-          </parameter>
-          <parameter name="event" type="Object" usage="required">
-            <description>A JavaScript event object as passed to an event handler.</description>
           </parameter>
         </parameters>
         <return-types>
@@ -4468,7 +3566,6 @@ $("p").unbind("click", foo); // ... foo will no longer be called.&lt;/p&gt;
         </return-types>
         <description> Remove an event handler</description>
       </method>
-      
       <method name="on" scope="instance">
         <parameters>
           <parameter name="eventType" type="String|EventString" usage="required">
@@ -4492,7 +3589,7 @@ $("p").unbind("click", foo); // ... foo will no longer be called.&lt;/p&gt;
       
       <method name="bind" scope="instance">
         <parameters>
-          <parameter name="eventType" type="String" usage="required">
+          <parameter name="eventType" type="String|EventString" usage="required">
             <description>A string containing one or more JavaScript event types, such as "click" or "submit," or custom event names.</description>
           </parameter>
           <parameter name="eventData" type="Object" usage="optional">
@@ -4500,18 +3597,6 @@ $("p").unbind("click", foo); // ... foo will no longer be called.&lt;/p&gt;
           </parameter>
           <parameter name="handler" type="Function" usage="required">
             <description>A function to execute each time the event is triggered.</description>
-          </parameter>
-          <parameter name="eventType" type="String" usage="required">
-            <description>A string containing one or more JavaScript event types, such as "click" or "submit," or custom event names.</description>
-          </parameter>
-          <parameter name="eventData" type="Object" usage="optional">
-            <description>A map of data that will be passed to the event handler.</description>
-          </parameter>
-          <parameter name="preventBubble" type="Boolean" usage="required">
-            <description>Setting the third argument to false will attach a function that prevents the default action from occurring and stops the event from bubbling. The default is true.</description>
-          </parameter>
-          <parameter name="events" type="Object" usage="required">
-            <description>A map of one or more JavaScript event types and functions to execute for them.</description>
           </parameter>
         </parameters>
         <return-types>
@@ -4773,26 +3858,10 @@ $(".block").animate({left: '-=100px'}, 2000);
 	</example>
         </examples>
       </method>
-      <method name="andSelf" scope="instance">
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Add the previous set of elements on the stack to the current set.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Find all divs, and all the paragraphs inside of them, and give them both class names.  Notice the div doesn't have the yellow background color since it didn't use .andSelf().&lt;/p&gt;
-		
-		&lt;p&gt;
-    $("div").find("p").andSelf().addClass("border");
-    $("div").find("p").addClass("background");
-
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
+     
       <method name="siblings" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="optional">
+          <parameter name="selector" type="Selector|SelectorString" usage="optional">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
         </parameters>
@@ -4821,7 +3890,7 @@ $(".block").animate({left: '-=100px'}, 2000);
       </method>
       <method name="animate" scope="instance">
         <parameters>
-          <parameter name="properties" type="Map" usage="required">
+          <parameter name="properties" type="Object" usage="required">
             <description>A map of CSS properties that the animation will move toward.</description>
           </parameter>
           <parameter name="duration" type="String|Number" usage="optional">
@@ -4978,7 +4047,7 @@ $( "#go" ).click(function(){
       </method>
       <method name="prevAll" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="optional">
+          <parameter name="selector" type="Selector|SelectorString" usage="optional">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
         </parameters>
@@ -4996,7 +4065,7 @@ $( "#go" ).click(function(){
       </method>
       <method name="prev" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="optional">
+          <parameter name="selector" type="Selector|SelectorString" usage="optional">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
         </parameters>
@@ -5028,15 +4097,6 @@ $( "#go" ).click(function(){
       </method>
       <method name="fadeTo" scope="instance">
         <parameters>
-          <parameter name="duration" type="String|Number" usage="required">
-            <description>A string or number determining how long the animation will run.</description>
-          </parameter>
-          <parameter name="opacity" type="Number" usage="required">
-            <description>A number between 0 and 1 denoting the target opacity.</description>
-          </parameter>
-          <parameter name="callback" type="Function" usage="optional">
-            <description>A function to call once the animation is complete.</description>
-          </parameter>
           <parameter name="duration" type="String|Number" usage="required">
             <description>A string or number determining how long the animation will run.</description>
           </parameter>
@@ -5108,12 +4168,6 @@ $("div").each(function (n) {
           <parameter name="duration" type="String|Number" usage="optional">
             <description>A string or number determining how long the animation will run.</description>
           </parameter>
-          <parameter name="callback" type="Function" usage="optional">
-            <description>A function to call once the animation is complete.</description>
-          </parameter>
-          <parameter name="duration" type="String|Number" usage="optional">
-            <description>A string or number determining how long the animation will run.</description>
-          </parameter>
           <parameter name="easing" type="String" usage="optional">
             <description>A string indicating which easing function to use for the transition.</description>
           </parameter>
@@ -5178,7 +4232,7 @@ $("#btn2").click(function() {
       </method>
       <method name="parents" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="optional">
+          <parameter name="selector" type="Selector|SelectorString" usage="optional">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
         </parameters>
@@ -5224,12 +4278,6 @@ $("span").click(function () {
           <parameter name="duration" type="String|Number" usage="optional">
             <description>A string or number determining how long the animation will run.</description>
           </parameter>
-          <parameter name="callback" type="Function" usage="optional">
-            <description>A function to call once the animation is complete.</description>
-          </parameter>
-          <parameter name="duration" type="String|Number" usage="optional">
-            <description>A string or number determining how long the animation will run.</description>
-          </parameter>
           <parameter name="easing" type="String" usage="optional">
             <description>A string indicating which easing function to use for the transition.</description>
           </parameter>
@@ -5268,7 +4316,7 @@ $("span").click(function () {
       </method>
       <method name="parent" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="optional">
+          <parameter name="selector" type="Selector|SelectorString" usage="optional">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
         </parameters>
@@ -5313,12 +4361,6 @@ $("span").click(function () {
           <parameter name="duration" type="String|Number" usage="optional">
             <description>A string or number determining how long the animation will run.</description>
           </parameter>
-          <parameter name="callback" type="Function" usage="optional">
-            <description>A function to call once the animation is complete.</description>
-          </parameter>
-          <parameter name="duration" type="String|Number" usage="optional">
-            <description>A string or number determining how long the animation will run.</description>
-          </parameter>
           <parameter name="easing" type="String" usage="optional">
             <description>A string indicating which easing function to use for the transition.</description>
           </parameter>
@@ -5357,10 +4399,10 @@ $("span").click(function () {
       </method>
       <method name="post" scope="static">
         <parameters>
-          <parameter name="url" type="String" usage="required">
+          <parameter name="url" type="String|URIString" usage="required">
             <description>A string containing the URL to which the request is sent.</description>
           </parameter>
-          <parameter name="data" type="Map| String" usage="optional">
+          <parameter name="data" type="Object|String" usage="optional">
             <description>A map or string that is sent to the server with the request.</description>
           </parameter>
           <parameter name="success" type="Function" usage="optional">
@@ -5461,12 +4503,6 @@ $("span").click(function () {
           <parameter name="duration" type="String|Number" usage="optional">
             <description>A string or number determining how long the animation will run.</description>
           </parameter>
-          <parameter name="callback" type="Function" usage="optional">
-            <description>A function to call once the animation is complete.</description>
-          </parameter>
-          <parameter name="duration" type="String|Number" usage="optional">
-            <description>A string or number determining how long the animation will run.</description>
-          </parameter>
           <parameter name="easing" type="String" usage="optional">
             <description>A string indicating which easing function to use for the transition.</description>
           </parameter>
@@ -5509,7 +4545,7 @@ $("span").click(function () {
       </method>
       <method name="nextAll" scope="instance">
         <parameters>
-          <parameter name="selector" type="String" usage="optional">
+          <parameter name="selector" type="String|SelectorString" usage="optional">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
         </parameters>
@@ -5534,7 +4570,7 @@ $("span").click(function () {
       </method>
       <method name="next" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="optional">
+          <parameter name="selector" type="Selector|SelectorString" usage="optional">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
         </parameters>
@@ -5557,12 +4593,6 @@ $("span").click(function () {
       </method>
       <method name="slideDown" scope="instance">
         <parameters>
-          <parameter name="duration" type="String|Number" usage="optional">
-            <description>A string or number determining how long the animation will run.</description>
-          </parameter>
-          <parameter name="callback" type="Function" usage="optional">
-            <description>A function to call once the animation is complete.</description>
-          </parameter>
           <parameter name="duration" type="String|Number" usage="optional">
             <description>A string or number determining how long the animation will run.</description>
           </parameter>
@@ -5613,7 +4643,7 @@ $("div").css("visibility", "hidden");
       </method>
       <method name="find" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="required">
+          <parameter name="selector" type="Selector|SelectorString" usage="required">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
           <parameter name="jQuery object" type="Object" usage="required">
@@ -5667,7 +4697,7 @@ $("div").css("visibility", "hidden");
       </method>
       <method name="getScript" scope="static">
         <parameters>
-          <parameter name="url" type="String" usage="required">
+          <parameter name="url" type="String|URIString" usage="required">
             <description>A string containing the URL to which the request is sent.</description>
           </parameter>
           <parameter name="success" type="Function" usage="optional">
@@ -5714,10 +4744,7 @@ $.getScript("http://dev.jquery.com/view/trunk/plugins/color/jquery.color.js", fu
       </method>
       <method name="closest" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="required">
-            <description>A string containing a selector expression to match elements against.</description>
-          </parameter>
-          <parameter name="selector" type="Selector" usage="required">
+          <parameter name="selector" type="Selector|SelectorString" usage="required">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
           <parameter name="context" type="Element" usage="optional">
@@ -5756,37 +4783,12 @@ $.getScript("http://dev.jquery.com/view/trunk/plugins/color/jquery.color.js", fu
 	</example>
         </examples>
       </method>
-      <method name="closest" scope="instance">
-        <parameters>
-          <parameter name="selectors" type="Array" usage="required">
-            <description>An array or string containing a selector expression to match elements against (can also be a jQuery object).</description>
-          </parameter>
-          <parameter name="context" type="Element" usage="optional">
-            <description>A DOM element within which a matching element may be found. If no context is passed in then the context of the jQuery set will be used instead.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="Array"/>
-        </return-types>
-        <description>Gets an array of all the elements and selectors matched against the current element up through the DOM tree.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Show how event delegation can be done with closest.&lt;/p&gt;
-		
-		&lt;p&gt;
-  var close = $("li:first").closest(["ul", "body"]);
-  $.each(close, function(i){
-  $("li").eq(i).html( this.selector + ": " + this.elem.nodeName );
-  });&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
       <method name="getJSON" scope="static">
         <parameters>
-          <parameter name="url" type="String" usage="required">
+          <parameter name="url" type="String|URIString" usage="required">
             <description>A string containing the URL to which the request is sent.</description>
           </parameter>
-          <parameter name="data" type="Map" usage="optional">
+          <parameter name="data" type="Object" usage="optional">
             <description>A map or string that is sent to the server with the request.</description>
           </parameter>
           <parameter name="success" type="Function" usage="optional">
@@ -5833,10 +4835,10 @@ $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?
       </method>
       <method name="get" scope="static">
         <parameters>
-          <parameter name="url" type="String" usage="required">
+          <parameter name="url" type="String|URIString" usage="required">
             <description>A string containing the URL to which the request is sent.</description>
           </parameter>
-          <parameter name="data" type="Map| String" usage="optional">
+          <parameter name="data" type="Map|String" usage="optional">
             <description>A map or string that is sent to the server with the request.</description>
           </parameter>
           <parameter name="success" type="Function" usage="optional">
@@ -5894,10 +4896,10 @@ alert("Data Loaded: " + data);
       </method>
       <method name="load" scope="instance">
         <parameters>
-          <parameter name="url" type="String" usage="required">
+          <parameter name="url" type="String|URIString" usage="required">
             <description>A string containing the URL to which the request is sent.</description>
           </parameter>
-          <parameter name="data" type="Map| String" usage="required">
+          <parameter name="data" type="Map|String" usage="required">
             <description>A map or string that is sent to the server with the request.</description>
           </parameter>
           <parameter name="complete" type="Function" usage="optional">
@@ -5949,13 +4951,10 @@ alert("The last 25 entries in the feed have been loaded");
       </method>
       <method name="ajax" scope="static">
         <parameters>
-          <parameter name="url" type="String" usage="required">
+          <parameter name="url" type="String|URIString|jQuerySetting" usage="required">
             <description>A string containing the URL to which the request is sent.</description>
           </parameter>
-          <parameter name="settings" type="Map" usage="optional">
-            <description>A set of key/value pairs that configure the Ajax request. All settings are optional. A default can be set for any option with </description>
-          </parameter>
-          <parameter name="settings" type="Map" usage="required">
+          <parameter name="settings" type="Object" usage="optional">
             <description>A set of key/value pairs that configure the Ajax request. All settings are optional. A default can be set for any option with </description>
           </parameter>
         </parameters>
@@ -6038,7 +5037,7 @@ option to false, the automatic conversion of data to strings is prevented.&lt;/p
       </method>
       <method name="children" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="optional">
+          <parameter name="selector" type="Selector|SelectorString" usage="optional">
             <description>A string containing a selector expression to match elements against.</description>
           </parameter>
         </parameters>
@@ -6079,19 +5078,7 @@ option to false, the automatic conversion of data to strings is prevented.&lt;/p
       </method>
       <method name="add" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="required">
-            <description>A string representing a selector expression to find additional elements to add to the set of matched elements.</description>
-          </parameter>
-          <parameter name="elements" type="Element" usage="required">
-            <description>One or more elements to add to the set of matched elements.</description>
-          </parameter>
-          <parameter name="html" type="String" usage="required">
-            <description>An HTML fragment to add to the set of matched elements.</description>
-          </parameter>
-          <parameter name="jQuery object" type="jQuery object " usage="required">
-            <description>An existing jQuery object to add to the set of matched elements.</description>
-          </parameter>
-          <parameter name="selector" type="Selector" usage="required">
+          <parameter name="selector" type="Selector|SelectorString|HTMLString|Element|jQuery" usage="required">
             <description>A string representing a selector expression to find additional elements to add to the set of matched elements.</description>
           </parameter>
           <parameter name="context" type="Element" usage="required">
@@ -6140,14 +5127,8 @@ collection.css("background", "yellow");&lt;/p&gt;
       </method>
       <method name="not" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="required">
+          <parameter name="selector" type="Selector|SelectorString|Element|Function" usage="required">
             <description>A string containing a selector expression to match elements against.</description>
-          </parameter>
-          <parameter name="elements" type="Element" usage="required">
-            <description>One or more DOM elements to remove from the matched set.</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function used as a test for each element in the set. </description>
           </parameter>
         </parameters>
         <return-types>
@@ -6223,12 +5204,6 @@ $("p:last").text( "outerHeight:" + p.outerHeight() + " , outerHeight(true):" + p
       </method>
       <method name="toggle" scope="instance">
         <parameters>
-          <parameter name="duration" type="String|Number" usage="optional">
-            <description>A string or number determining how long the animation will run.</description>
-          </parameter>
-          <parameter name="callback" type="Function" usage="optional">
-            <description>A function to call once the animation is complete.</description>
-          </parameter>
           <parameter name="duration" type="String|Number" usage="optional">
             <description>A string or number determining how long the animation will run.</description>
           </parameter>
@@ -6354,11 +5329,8 @@ $.param({ a: { b:1,c:2 }, d: [3,4,{ e:5 }] }) // "a[b]=1&amp;a[c]=2&amp;d[]=3&am
       </method>
       <method name="hide" scope="instance">
         <parameters>
-          <parameter name="duration" type="String|Number" usage="required">
+          <parameter name="duration" type="String|Number" usage="optional">
             <description>A string or number determining how long the animation will run.</description>
-          </parameter>
-          <parameter name="callback" type="Function" usage="optional">
-            <description>A function to call once the animation is complete.</description>
           </parameter>
           <parameter name="duration" type="String|Number" usage="optional">
             <description>A string or number determining how long the animation will run.</description>
@@ -6456,33 +5428,6 @@ $.param({ a: { b:1,c:2 }, d: [3,4,{ e:5 }] }) // "a[b]=1&amp;a[c]=2&amp;d[]=3&am
 	</example>
         </examples>
       </method>
-      <method name="width" scope="instance">
-        <parameters>
-          <parameter name="value" type="String| Number" usage="required">
-            <description>An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function returning the width to set. Receives the index position of the element in the set and the old width as arguments. Within the function, </description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Set the CSS width of each element in the set of matched elements.</description>
-        <examples>
-          <example>
-			&lt;p&gt;To set the width of each div on click to 30px plus a color change.&lt;/p&gt;
-		
-		&lt;p&gt;
-
-    $("div").one('click', function () {
-      $(this).width(30)
-             .css({cursor:"auto", "background-color":"blue"});
-    });
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
       <method name="height" scope="instance">
         <return-types>
           <return-type type="Number"/>
@@ -6511,38 +5456,8 @@ $.param({ a: { b:1,c:2 }, d: [3,4,{ e:5 }] }) // "a[b]=1&amp;a[c]=2&amp;d[]=3&am
 	</example>
         </examples>
       </method>
-      <method name="height" scope="instance">
-        <parameters>
-          <parameter name="value" type="String| Number" usage="required">
-            <description>An integer representing the number of pixels, or an integer with an optional unit of measure appended (as a string).</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function returning the height to set. Receives the index position of the element in the set and the old height as arguments. Within the function, </description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Set the CSS height of every matched element.</description>
-        <examples>
-          <example>
-			&lt;p&gt;To set the height of each div on click to 30px plus a color change.&lt;/p&gt;
-		
-		&lt;p&gt;$("div").one('click', function () {
-      $(this).height(30)
-             .css({cursor:"auto", backgroundColor:"green"});
-    });&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
       <method name="show" scope="instance">
         <parameters>
-          <parameter name="duration" type="String|Number" usage="required">
-            <description>A string or number determining how long the animation will run.</description>
-          </parameter>
-          <parameter name="callback" type="Function" usage="optional">
-            <description>A function to call once the animation is complete.</description>
-          </parameter>
           <parameter name="duration" type="String|Number" usage="optional">
             <description>A string or number determining how long the animation will run.</description>
           </parameter>
@@ -6620,25 +5535,6 @@ $("form").submit(function () {
 			$("p:last").text( "scrollLeft:" + p.scrollLeft() );
 
 			&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
-      <method name="scrollLeft" scope="instance">
-        <parameters>
-          <parameter name="value" type="Number" usage="required">
-            <description>An integer indicating the new position to set the scroll bar to.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Set the current horizontal position of the scroll bar for each of the set of matched elements.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Set the scrollLeft of a div.&lt;/p&gt;
-		
-		&lt;p&gt;$("div.demo").scrollLeft(300);
-&lt;/p&gt;
 	</example>
         </examples>
       </method>
@@ -7187,25 +6083,6 @@ $("p:last").text( "scrollTop:" + p.scrollTop() );
 	</example>
         </examples>
       </method>
-      <method name="scrollTop" scope="instance">
-        <parameters>
-          <parameter name="value" type="Number" usage="required">
-            <description>An integer indicating the new position to set the scroll bar to.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Set the current vertical position of the scroll bar for each of the set of matched elements.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Set the scrollTop of a div.&lt;/p&gt;
-		
-		&lt;p&gt;$("div.demo").scrollTop(300);
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
       <method name="position" scope="instance">
         <return-types>
           <return-type type="Object"/>
@@ -7251,31 +6128,12 @@ $("*", document.body).click(function (e) {
 	</example>
         </examples>
       </method>
-      <method name="offset" scope="instance">
-        <parameters>
-          <parameter name="coordinates" type="Object" usage="required">
-            <description>An object containing the properties </description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function to return the coordinates to set. Receives the index of the element in the collection as the first argument and the current coordinates as the second argument. The function should return an object with the new </description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Set the current coordinates of every element in the set of matched elements, relative to the document.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Set the offset of the second paragraph:&lt;/p&gt;
-		
-		&lt;p&gt;$("p:last").offset({ top: 10, left: 30 });&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
       <method name="css" scope="instance">
         <parameters>
-          <parameter name="propertyName" type="String" usage="required">
+          <parameter name="propertyName" type="String|cssPropertyString" usage="required">
             <description>A CSS property.</description>
+          </parameter>
+           <parameter name="propertyvalue" type="String|cssPropertyValueString|Function(Number,String|cssPropertyValueString)" usage="required">
           </parameter>
         </parameters>
         <return-types>
@@ -7297,96 +6155,7 @@ $("div").click(function () {
 	</example>
         </examples>
       </method>
-      <method name="css" scope="instance">
-        <parameters>
-          <parameter name="propertyName" type="String" usage="required">
-            <description>A CSS property name.</description>
-          </parameter>
-          <parameter name="value" type="String| Number" usage="required">
-            <description>A value to set for the property.</description>
-          </parameter>
-          <parameter name="propertyName" type="String" usage="required">
-            <description>A CSS property name.</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function returning the value to set. </description>
-          </parameter>
-          <parameter name="map" type="Map" usage="required">
-            <description>A map of property-value pairs to set.</description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Set one or more CSS properties for the  set of matched elements.</description>
-        <examples>
-          <example>
-			&lt;p&gt;To change the color of any paragraph to red on mouseover event.&lt;/p&gt;
-		
-		&lt;p&gt;
-  $("p").mouseover(function () {
-    $(this).css("color","red");
-  });
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Increase the width of #box by 200 pixels&lt;/p&gt;
-		
-		&lt;p&gt;
-  $("#box").one( "click", function () {
-    $( this ).css( "width","+=200" );
-  });
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;To highlight a clicked word in the paragraph.&lt;/p&gt;
-		
-		&lt;p&gt;
-  var words = $("p:first").text().split(" ");
-  var text = words.join("&lt;/span&gt; &lt;span&gt;");
-  $("p:first").html("&lt;span&gt;" + text + "&lt;/span&gt;");
-  $("span").click(function () {
-    $(this).css("background-color","yellow");
-  });
-
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;To set the color of all paragraphs to red and background to blue:&lt;/p&gt;
-		
-		&lt;p&gt;
-  $("p").hover(function () {
-    $(this).css({'background-color' : 'yellow', 'font-weight' : 'bolder'});
-  }, function () {
-    var cssObj = {
-      'background-color' : '#ddd',
-      'font-weight' : '',
-      'color' : 'rgb(0,40,244)'
-    }
-    $(this).css(cssObj);
-  });
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Increase the size of a div when you click it:&lt;/p&gt;
-		
-		&lt;p&gt;
-  $("div").click(function() {
-    $(this).css({
-      width: function(index, value) {
-        return parseFloat(value) * 1.2;
-      }, 
-      height: function(index, value) {
-        return parseFloat(value) * 1.2;
-      }
-
-    });
-  });
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
-      <method name="unwrap" scope="instance">
+     <method name="unwrap" scope="instance">
         <return-types>
           <return-type type="jQuery"/>
         </return-types>
@@ -7406,7 +6175,7 @@ $("button").toggle(function(){
       </method>
       <method name="detach" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="optional">
+          <parameter name="selector" type="Selector|SelectorString" usage="optional">
             <description>A selector expression that filters the set of matched elements to be removed.</description>
           </parameter>
         </parameters>
@@ -7438,9 +6207,6 @@ $("button").toggle(function(){
         <parameters>
           <parameter name="withDataAndEvents" type="Boolean" usage="optional">
             <description>A Boolean indicating whether event handlers should be copied along with the elements. As of jQuery 1.4, element data will be copied as well.</description>
-          </parameter>
-          <parameter name="withDataAndEvents" type="Boolean" usage="optional">
-            <description>A Boolean indicating whether event handlers and data should be copied along with the elements. The default value is </description>
           </parameter>
           <parameter name="deepWithDataAndEvents" type="Boolean" usage="optional">
             <description>A Boolean indicating whether event handlers and data for all children of the cloned element should be copied. By default its value matches the first argument's value (which defaults to </description>
@@ -7483,7 +6249,7 @@ $('#copy-correct')
       </method>
       <method name="remove" scope="instance">
         <parameters>
-          <parameter name="selector" type="String" usage="optional">
+          <parameter name="selector" type="String|SelectorString" usage="optional">
             <description>A selector expression that filters the set of matched elements to be removed.</description>
           </parameter>
         </parameters>
@@ -7534,7 +6300,7 @@ $('#copy-correct')
       </method>
       <method name="replaceAll" scope="instance">
         <parameters>
-          <parameter name="target" type="Selector" usage="required">
+          <parameter name="target" type="Selector|SelectorString" usage="required">
             <description>A selector expression indicating which element(s) to replace.</description>
           </parameter>
         </parameters>
@@ -7552,7 +6318,7 @@ $('#copy-correct')
       </method>
       <method name="replaceWith" scope="instance">
         <parameters>
-          <parameter name="newContent" type="String| Element| jQuery" usage="required">
+          <parameter name="newContent" type="String| Element| jQuery|HTMLString" usage="required">
             <description>The content to insert. May be an HTML string, DOM element, or jQuery object.</description>
           </parameter>
           <parameter name="function" type="Function" usage="required">
@@ -7606,7 +6372,7 @@ $('button').bind("click", function() {
       </method>
       <method name="wrapInner" scope="instance">
         <parameters>
-          <parameter name="wrappingElement" type="String" usage="required">
+          <parameter name="wrappingElement" type="String|HTMLString" usage="required">
             <description>An HTML snippet, selector expression, jQuery object, or DOM element specifying the structure to wrap around the content of the matched elements.</description>
           </parameter>
           <parameter name="function" type="Function" usage="required">
@@ -7642,7 +6408,7 @@ $('button').bind("click", function() {
       </method>
       <method name="wrapAll" scope="instance">
         <parameters>
-          <parameter name="wrappingElement" type="String| Selector| Element| jQuery" usage="required">
+          <parameter name="wrappingElement" type="String| Selector| Element| jQuery|HTMLString" usage="required">
             <description>An HTML snippet, selector expression, jQuery object, or DOM element specifying the structure to wrap around the matched elements.</description>
           </parameter>
         </parameters>
@@ -7675,7 +6441,7 @@ $('button').bind("click", function() {
       </method>
       <method name="wrap" scope="instance">
         <parameters>
-          <parameter name="wrappingElement" type="String| Selector| Element| jQuery" usage="required">
+          <parameter name="wrappingElement" type="String| Selector| Element| jQuery|HTMLString" usage="required">
             <description>An HTML snippet, selector expression, jQuery object, or DOM element specifying the structure to wrap around the matched elements.</description>
           </parameter>
           <parameter name="function" type="Function" usage="required">
@@ -7711,7 +6477,7 @@ $('button').bind("click", function() {
       </method>
       <method name="insertBefore" scope="instance">
         <parameters>
-          <parameter name="target" type="Selector| Element| jQuery" usage="required">
+          <parameter name="target" type="Selector| Element| jQuery|SelectorString" usage="required">
             <description>A selector, element, HTML string, or jQuery object; the matched set of elements will be inserted before the element(s) specified by this parameter.</description>
           </parameter>
         </parameters>
@@ -7763,7 +6529,7 @@ $('button').bind("click", function() {
       </method>
       <method name="insertAfter" scope="instance">
         <parameters>
-          <parameter name="target" type="Selector| Element| jQuery" usage="required">
+          <parameter name="target" type="Selector| Element| jQuery|SelectorString" usage="required">
             <description>A selector, element, HTML string, or jQuery object; the matched set of elements will be inserted after the element(s) specified by this parameter.</description>
           </parameter>
         </parameters>
@@ -7815,7 +6581,7 @@ $('button').bind("click", function() {
       </method>
       <method name="prependTo" scope="instance">
         <parameters>
-          <parameter name="target" type="Selector| Element| jQuery" usage="required">
+          <parameter name="target" type="Selector| Element| jQuery|SelectorString" usage="required">
             <description>A selector, element, HTML string, or jQuery object; the matched set of elements will be inserted at the beginning of the element(s) specified by this parameter.</description>
           </parameter>
         </parameters>
@@ -7833,14 +6599,8 @@ $('button').bind("click", function() {
       </method>
       <method name="prepend" scope="instance">
         <parameters>
-          <parameter name="content" type="String| Element| jQuery" usage="required">
+          <parameter name="content" type="HTMLString|Element|Array|jQuery|String" usage="required">
             <description>DOM element, array of elements, HTML string, or jQuery object to insert at the beginning of each element in the set of matched elements.</description>
-          </parameter>
-          <parameter name="content" type="String| Element| jQuery" usage="optional">
-            <description>One or more additional DOM elements, arrays of elements, HTML strings, or jQuery objects to insert at the beginning of each element in the set of matched elements.</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function that returns an HTML string, DOM element(s), or jQuery object to insert at the beginning of each element in the set of matched elements. Receives the index position of the element in the set and the old HTML value of the element as arguments. Within the function, </description>
           </parameter>
         </parameters>
         <return-types>
@@ -7867,7 +6627,7 @@ $('button').bind("click", function() {
       </method>
       <method name="appendTo" scope="instance">
         <parameters>
-          <parameter name="target" type="Selector| Element| jQuery" usage="required">
+          <parameter name="target" type="HTMLString|Element|Array|jQuery|SelectorString" usage="required">
             <description>A selector, element, HTML string, or jQuery object; the matched set of elements will be inserted at the end of the element(s) specified by this parameter.</description>
           </parameter>
         </parameters>
@@ -7885,14 +6645,8 @@ $('button').bind("click", function() {
       </method>
       <method name="append" scope="instance">
         <parameters>
-          <parameter name="content" type="String| Element| jQuery" usage="required">
+          <parameter name="content" type="HTMLString|Element|Array|jQuery|String" usage="required">
             <description>DOM element, HTML string, or jQuery object to insert at the end of each element in the set of matched elements.</description>
-          </parameter>
-          <parameter name="content" type="String| Element| Array| jQuery" usage="optional">
-            <description>One or more additional DOM elements, arrays of elements, HTML strings, or jQuery objects to insert at the end of each element in the set of matched elements.</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function that returns an HTML string, DOM element(s), or jQuery object to insert at the end of each element in the set of matched elements. Receives the index position of the element in the set and the old HTML value of the element as arguments. Within the function, </description>
           </parameter>
         </parameters>
         <return-types>
@@ -7961,78 +6715,13 @@ $('button').bind("click", function() {
 	</example>
         </examples>
       </method>
-      <method name="val" scope="instance">
-        <parameters>
-          <parameter name="value" type="String" usage="required">
-            <description>A string of text or an array of strings corresponding to the value of each matched element to set as selected/checked.</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function returning the value to set. </description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Set the value of each element in the set of matched elements.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Set the value of an input box.&lt;/p&gt;
-		
-		&lt;p&gt;
-    $("button").click(function () {
-      var text = $(this).text();
-      $("input").val(text);
-    });
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Use the function argument to modify the value of an input box.&lt;/p&gt;
-		
-		&lt;p&gt;
-  $('input').bind('blur', function() {
-      
-    $(this).val(function(i, val) {
-      return val.toUpperCase();
-    });
-    
-  });
-  &lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Set a single select, a multiple select, checkboxes and a radio button .&lt;/p&gt;
-		
-		&lt;p&gt;
-    
-    $("#single").val("Single2");
-    $("#multiple").val(["Multiple2", "Multiple3"]); 
-    $("input").val(["check1","check2", "radio1" ]);
-
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
-      <method name="text" scope="instance">
-        <return-types>
-          <return-type type="String"/>
-        </return-types>
-        <description>Get the combined text contents of each element in the set of matched elements, including their descendants.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Find the text in the first paragraph (stripping out the html), then set the html of the last paragraph to show it is just text (the red bold is gone).&lt;/p&gt;
-		
-		&lt;p&gt;
-    var str = $("p:first").text();
-    $("p:last").html(str);
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
+     
       <method name="text" scope="instance">
         <parameters>
           <parameter name="textString" type="String" usage="required">
             <description>A string of text to set as the content of each matched element.</description>
           </parameter>
-          <parameter name="function" type="Function" usage="required">
+          <parameter name="function" type="Function" usage="optional">
             <description>A function returning the text content to set. Receives the index position of the element in the set and the old text value as arguments.</description>
           </parameter>
         </parameters>
@@ -8048,27 +6737,10 @@ $('button').bind("click", function() {
 	</example>
         </examples>
       </method>
-      <method name="html" scope="instance">
-        <return-types>
-          <return-type type="String"/>
-        </return-types>
-        <description>Get the HTML contents of the first element in the set of matched elements.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Click a paragraph to convert it from html to text.&lt;/p&gt;
-		
-		&lt;p&gt;
-    $("p").click(function () {
-      var htmlStr = $(this).html();
-      $(this).text(htmlStr);
-    });
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
+
       <method name="html" scope="instance">
         <parameters>
-          <parameter name="htmlString" type="String" usage="required">
+          <parameter name="htmlString" type="String|HTMLString" usage="required">
             <description>A string of HTML to set as the content of each matched element.</description>
           </parameter>
           <parameter name="function" type="Function" usage="required">
@@ -8168,17 +6840,8 @@ $('input').click(function(){
       </method>
       <method name="is" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="required">
+          <parameter name="selector" type="Selector|SelectorString|Function|Element|jQuery" usage="required">
             <description>A string containing a selector expression to match elements against.</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function used as a test for the set of elements. It accepts one argument, </description>
-          </parameter>
-          <parameter name="jQuery object" type="Object" usage="required">
-            <description>An existing jQuery object to match the current set of elements against.</description>
-          </parameter>
-          <parameter name="element" type="Element" usage="required">
-            <description>An element to match the current set of elements against.</description>
           </parameter>
         </parameters>
         <return-types>
@@ -8255,9 +6918,6 @@ $('input').click(function(){
       <method name="eq" scope="instance">
         <parameters>
           <parameter name="index" type="Number" usage="required">
-            <description>An integer indicating the 0-based position of the element. </description>
-          </parameter>
-          <parameter name="index" type="Number" usage="required">
             <description>An integer indicating the position of the element, counting backwards  from the last element in the set. </description>
           </parameter>
         </parameters>
@@ -8278,17 +6938,8 @@ $('input').click(function(){
       </method>
       <method name="filter" scope="instance">
         <parameters>
-          <parameter name="selector" type="Selector" usage="required">
+          <parameter name="selector" type="Selector|SelectorString|Element|Function|jQuery" usage="required">
             <description>A string containing a selector expression to match the current set of elements against.</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function used as a test for each element in the set. </description>
-          </parameter>
-          <parameter name="element" type="Element" usage="required">
-            <description>An element to match the current set of elements against.</description>
-          </parameter>
-          <parameter name="jQuery object" type="Object" usage="required">
-            <description>An existing jQuery object to match the current set of elements against.</description>
           </parameter>
         </parameters>
         <return-types>
@@ -8333,16 +6984,10 @@ $("div").filter( $("#unique") )&lt;/p&gt;
       </method>
       <method name="toggleClass" scope="instance">
         <parameters>
-          <parameter name="className" type="String" usage="required">
+          <parameter name="className" type="String|ClassString" usage="required">
             <description>One or more class names (separated by spaces) to be toggled for each element in the matched set.</description>
           </parameter>
-          <parameter name="className" type="String" usage="required">
-            <description>One or more class names (separated by spaces) to be toggled for each element in the matched set.</description>
-          </parameter>
-          <parameter name="switch" type="Boolean" usage="required">
-            <description>A Boolean (not just truthy/falsy) value to determine whether the class should be added or removed.</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
+          <parameter name="function" type="Function" usage="optional">
             <description>A function that returns class names to be toggled in the class attribute of each element in the matched set. Receives the index position of the element in the set, the old class value, and the switch as arguments.</description>
           </parameter>
           <parameter name="switch" type="Boolean" usage="optional">
@@ -8384,11 +7029,8 @@ $("p").each(function() {
       </method>
       <method name="removeClass" scope="instance">
         <parameters>
-          <parameter name="className" type="ClassString" usage="optional">
+          <parameter name="className" type="String|ClassString|Function(Number,String|ClassString)" usage="optional">
             <description>One or more space-separated classes to be removed from the class attribute of each matched element.</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function returning one or more space-separated class names to be removed. Receives the index position of the element in the set and the old class value as arguments.</description>
           </parameter>
         </parameters>
         <return-types>
@@ -8415,7 +7057,7 @@ $("p").each(function() {
       </method>
       <method name="hasClass" scope="instance">
         <parameters>
-          <parameter name="className" type="ClassString" usage="required">
+          <parameter name="className" type="String|ClassString" usage="required">
             <description>The class name to search for.</description>
           </parameter>
         </parameters>
@@ -8437,7 +7079,7 @@ $("div#result3").append($("p").hasClass("selected").toString());
       </method>
       <method name="removeAttr" scope="instance">
         <parameters>
-          <parameter name="attributeName" type="AttrString" usage="required">
+          <parameter name="attributeName" type="String|AttrString" usage="required">
             <description>An attribute to remove.</description>
           </parameter>
         </parameters>
@@ -8461,8 +7103,11 @@ $("button").click(function () {
       </method>
       <method name="attr" scope="instance">
         <parameters>
-          <parameter name="attributeName" type="AttrString" usage="required">
+          <parameter name="attributeName" type="String|AttrString" usage="required">
             <description>The name of the attribute to get.</description>
+          </parameter>
+          <parameter name="value" type="String|Number|AttrValueString" usage="required">
+            <description>A value to set for the attribute.</description>
           </parameter>
         </parameters>
         <return-types>
@@ -8480,78 +7125,10 @@ var title = $("em").attr("title");
 	</example>
         </examples>
       </method>
-      <method name="attr" scope="instance">
-        <parameters>
-          <parameter name="attributeName" type="AttrString" usage="required">
-            <description>The name of the attribute to set.</description>
-          </parameter>
-          <parameter name="value" type="String|Number" usage="required">
-            <description>A value to set for the attribute.</description>
-          </parameter>
-          <parameter name="map" type="Map" usage="required">
-            <description>A map of attribute-value pairs to set.</description>
-          </parameter>
-          <parameter name="attributeName" type="AttrString" usage="required">
-            <description>The name of the attribute to set.</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function returning the value to set. </description>
-          </parameter>
-        </parameters>
-        <return-types>
-          <return-type type="jQuery"/>
-        </return-types>
-        <description>Set one or more attributes for the set of matched elements.</description>
-        <examples>
-          <example>
-			&lt;p&gt;Set some attributes for all &lt;img&gt;s in the page.&lt;/p&gt;
-		
-		&lt;p&gt;
-$("img").attr({ 
-  src: "/images/hat.gif",
-  title: "jQuery",
-  alt: "jQuery Logo"
-});
-$("div").text($("img").attr("alt"));
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Disable buttons greater than the 1st button.&lt;/p&gt;
-		
-		&lt;p&gt;
-$("button:gt(1)").attr("disabled","disabled");
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Set the id for divs based on the position in the page.&lt;/p&gt;
-		
-		&lt;p&gt;
-$("div").attr("id", function (arr) {
-  return "div-id" + arr;
-})
-.each(function () {
-  $("span", this).html("(ID = '&lt;b&gt;" + this.id + "&lt;/b&gt;')");
-});
-&lt;/p&gt;
-	</example>
-          <example>
-			&lt;p&gt;Set the src attribute from title attribute on the image.&lt;/p&gt;
-		
-		&lt;p&gt;
-$("img").attr("src", function() { 
-    return "/images/" + this.title; 
-});
-&lt;/p&gt;
-	</example>
-        </examples>
-      </method>
       <method name="addClass" scope="instance">
         <parameters>
-          <parameter name="className" type="ClassString" usage="required">
+          <parameter name="className" type="String|ClassString|Function(Number,String|ClassString)" usage="required">
             <description>One or more class names to be added to the class attribute of each matched element.</description>
-          </parameter>
-          <parameter name="function" type="Function" usage="required">
-            <description>A function returning one or more space-separated class names to be added. Receives the index position of the element in the set and the old class value as arguments. Within the function, </description>
           </parameter>
         </parameters>
         <return-types>
