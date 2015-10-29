@@ -1,0 +1,13 @@
+依次点击菜单“工具”-“扩展代码块”-“自定义HTML代码块”，搜索end #ng代码块结束，在下一行加入
+  snippet 'ms-' do |s|   
+    s.trigger = 'ms-'     
+    s.expansion='ms-${1:controller/important/include/textml/class/scan/hover/active/onisible/if/if-loop/duplex/css/dataeckedlected/readonly/disabled/enabled/title/src/href/attr/repeat/each/with/widget/clicklclick/mousedown/mouseup/mouseover/mousemove/mouseout/keypress/keydown/keyup/mouseenter/mouseleave/blur/focusange/hover/css-/attr-/repeat-/each-/on-}="$2"'
+    s.locationType='HTML_ATTRIBUTE'
+  end 
+  
+  snippet 'data-' do |s|   
+    s.trigger = 'data-'     
+    s.expansion='data-${1:include-rendered/include-loaded/with-sorted/duplex-changed/duplex-event/event/repeat-rendered/each-rendered/with-rendered}="$2"'
+    s.locationType='HTML_ATTRIBUTE'
+  end 
+保存（mac下可能需要重启）即可提示
